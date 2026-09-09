@@ -11,7 +11,6 @@ MOIT v3 (소모임 플랫폼) - Spring Boot + React/Next.js
 개발 언어:	Java 17, Spring Boot 3.3.5, Spring Security, JWT Redis, JPA, MyBatis, Oracle, React, Next.js
 
 주요기능:
-■ 주요 기능 & 담당 업무 - 사용자 신고 및 관리자 처리 기능 담당
 - 사용자 신고 CRUD와 관리자 신고 검색·페이징·상세 조회 및 승인·반려 기능 구현
 - 신고 처리 결과가 회원 신뢰도와 관리자 감사 이력에 연결되도록 서비스 로직 구성
 - 운영 정책 및 신고 사례를 RAG로 검색하여 OpenAI API기반 분석 결과 제공
