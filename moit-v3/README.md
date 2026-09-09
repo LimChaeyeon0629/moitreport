@@ -7,8 +7,12 @@ MOIT v3 (소모임 플랫폼) - Spring Boot + React/Next.js
 - 커뮤니티 서비스 구축 (모임 생성·참여 및 사용자 간 소통 기능 구현)
 - 신고 관리 체계 고도화 (신고 접수·관리자 처리·신뢰도 반영을 연계한 운영 프로세스 구축)
 - AI 판단 보조 기능 (OpenAI API와 RAG를 활용한 정책·유사 사례 기반 관리자 판단 보조)
-기간 / 인원:	2026.08.12 ~ 2026.08.28 (6명)
-개발 언어:	Java 17, Spring Boot 3.3.5, Spring Security, JWT Redis, JPA, MyBatis, Oracle, React, Next.js
+
+기간 / 인원:
+- 2026.08.12 ~ 2026.08.28 (6명)
+
+개발 언어:
+- Java 17, Spring Boot 3.3.5, Spring Security, JWT Redis, JPA, MyBatis, Oracle, React, Next.js
 
 주요기능:
 - 사용자 신고 CRUD와 관리자 신고 검색·페이징·상세 조회 및 승인·반려 기능 구현
