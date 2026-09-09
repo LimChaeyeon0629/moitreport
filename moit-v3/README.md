@@ -1,6 +1,5 @@
 # 🚀 MOIT (모잇)
 
-팀 프로젝트 – v3
 MOIT v3 (소모임 플랫폼) - Spring Boot + React/Next.js
 
 프로젝트 목표:
