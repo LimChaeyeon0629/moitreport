@@ -171,16 +171,13 @@ public class ReportsServiceImpl implements ReportsService {
 	@Transactional
 	@Override
 	public ReportResponseDto updateAdminReport(Long reportId, Long memberId, ReportProcessDto processDto) {
-		// 처리 사유 공백 막기
 		if (processDto.getProcessReason() == null || processDto.getProcessReason().isBlank()) {
 			throw new IllegalArgumentException("처리 사유를 입력해주세요.");
 		}
 		
-		// 신고 처리 가능? tryLock
-		boolean acquired = reportLockService.tryLock(reportId);
-
-		// 현재 처리중
-		if (!acquired) {
+		boolean acquired = reportLockService.tryLock(reportId);			// 신고 처리 가능? tryLock
+		
+		if (!acquired) {												// 현재 처리중
 			throw new IllegalStateException("현재 처리중");
 		}
 

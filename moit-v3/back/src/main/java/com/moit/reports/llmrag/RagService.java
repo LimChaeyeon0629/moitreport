@@ -110,7 +110,6 @@ public class RagService { // 실제 RAG 작업
 	public List<RagChunk> searchSimilarChunksByDocument(String query, String documentName, int topK) {
 		List<Double> queryEmbedding = aiService.createEmbedding(query);
 		return chunks.stream().filter(chunk -> documentName.equals(chunk.getDocumentName())).sorted((a, b) -> {
-
 			double similarityA = cosineSimilarity(queryEmbedding, a.getEmbedding());
 			double similarityB = cosineSimilarity(queryEmbedding, b.getEmbedding());
 			return Double.compare(similarityB, similarityA);

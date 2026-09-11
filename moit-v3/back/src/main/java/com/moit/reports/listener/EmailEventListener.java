@@ -12,11 +12,11 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class EmailEventListener {	// @Async(비동기) 처리
+public class EmailEventListener {
 
     private final SendEmailService sendEmailService;
 
-    @Async	// 메일이 DB commit보다 먼저 출발 -> AFTER_COMMIT 사용
+    @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleEmail(EmailRequestDto emailDto) {
         sendEmailService.sendEmail(emailDto);

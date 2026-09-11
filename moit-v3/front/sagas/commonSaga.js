@@ -10,7 +10,7 @@ import {
     searchAddressFailure,
 } from "../reducers/commonReducer";
 
-const COMMON_API_BASE = "http://localhost:8080/api/common";
+const COMMON_API_BASE = "/api/common";
 
 // =========================
 // 날씨 API
