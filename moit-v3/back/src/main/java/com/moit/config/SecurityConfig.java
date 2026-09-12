@@ -282,7 +282,8 @@ public class SecurityConfig {
 
         // Next.js
         configuration.setAllowedOrigins(
-            List.of("http://localhost:3000")
+            List.of("http://localhost:3000",
+            		"https://moitreport.duckdns.org")
         );
 
         // 허용 HTTP Method
