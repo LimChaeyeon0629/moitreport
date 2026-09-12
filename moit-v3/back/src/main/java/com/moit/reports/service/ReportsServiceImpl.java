@@ -175,13 +175,15 @@ public class ReportsServiceImpl implements ReportsService {
 			throw new IllegalArgumentException("처리 사유를 입력해주세요.");
 		}
 		
-		boolean acquired = reportLockService.tryLock(reportId);			// 신고 처리 가능? tryLock
+		boolean acquired = reportLockService.tryLock(reportId);			// tryLock
 		
-		if (!acquired) {												// 현재 처리중
-			throw new IllegalStateException("현재 처리중");
+		if (!acquired) {												// "현재 처리중인 신고입니다."
+			throw new IllegalStateException("현재 처리중인 신고입니다.");
 		}
 
 		try {
+			Thread.sleep(5000);		// 동시 처리 테스트용, 나중에 반드시 삭제
+			
 			// PEDING 상태 조회
 			Report report = getPendingReport(reportId);
 
@@ -215,6 +217,10 @@ public class ReportsServiceImpl implements ReportsService {
 			setTargetMemberInfo(report, responseDto);
 
 			return responseDto;
+			
+		} catch (InterruptedException e) {
+		    Thread.currentThread().interrupt();
+		    throw new IllegalStateException("신고 처리 테스트 중 오류가 발생했습니다.", e);
 
 		} finally {
 			reportLockService.unlock(reportId);

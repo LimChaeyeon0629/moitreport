@@ -14,11 +14,12 @@ import {
     fetchAdminReportAuditLogsRequest,
     aiReportAnalysisRequest,
     resetReportState,
+    resetAdminUpdateError
 } from '../../../reducers/reportReducer';
 
 import {
     Card, Input, Button, Typography, Space, Alert,
-    message, Descriptions, Modal, Spin, Text
+    message, Descriptions, Modal, Spin
 } from 'antd';
 
 import ReportStatusTag from '../../../components/ReportStatusTag';
@@ -83,7 +84,18 @@ function ReportDetailPage() {
             dispatch(resetReportState());
         }
     }, [adminUpdate.success, dispatch, reportId]);
-    
+
+    // --- 동시 신고 처리중 ---
+    useEffect(() => {
+        if (adminUpdate.error) {
+            Modal.error({
+                title: "신고 처리 실패",
+                content: adminUpdate.error,
+                onOk: () => { dispatch(resetAdminUpdateError()); },
+            });
+        }
+    }, [adminUpdate.error, dispatch]);
+
     // --- 신고 삭제 성공 ---
     useEffect(() => {
         if (adminDelete.success) {
@@ -102,12 +114,6 @@ function ReportDetailPage() {
         }
     }, [adminFetchDetail.error]);
 
-    // --- adminUpdate 오류 ---
-    useEffect(() => {
-        if (adminUpdate.error) {
-            message.error(adminUpdate.error);
-        }
-    }, [adminUpdate.error]);
     
 
 
