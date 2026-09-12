@@ -73,7 +73,8 @@ dependencies {
     implementation 'com.openai:openai-java:2.12.0'
     
     // SMS
-    implementation 'com.solapi:sdk:1.1.0'
+    implementation 'com.solapi:sdk:1.0.3'
+	//implementation 'com.solapi:sdk:1.1.0'
 
     // LLM-RAG PDFBox
     implementation 'org.apache.pdfbox:pdfbox:3.0.8'
