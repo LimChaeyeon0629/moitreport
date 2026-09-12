@@ -91,7 +91,7 @@ function write() {
                     uid: `existing-${index}`,
                     name: imagePath,
                     status: "done",
-                    url: `http://localhost:8080/upload/meetup/${imagePath}`,
+                    url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/meetup/${imagePath}`,
                 }),
             );
 

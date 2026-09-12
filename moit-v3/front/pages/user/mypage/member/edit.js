@@ -103,7 +103,7 @@ function UserMyMemberEditPage() {
     if (profileUrl) {
       if (profileUrl.startsWith('/images/profile/')) {
         setProfilePreview(
-          `http://localhost:8080${profileUrl}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}${profileUrl}`
         );
       } else {
         setProfilePreview(profileUrl);

@@ -229,7 +229,7 @@ function questionEdit() {
                     >
 
                       <a
-                        href={`http://localhost:8080${image.imagePath}`}
+                        href={`${process.env.NEXT_PUBLIC_API_BASE_URL}${image.imagePath}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

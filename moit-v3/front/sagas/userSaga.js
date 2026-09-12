@@ -953,7 +953,7 @@ function* logoutSaga(action) {
                 "?client_id=d1065db6fa6b99aa2d26a3d28c80143a" +
                 "&logout_redirect_uri=" +
                 encodeURIComponent(
-                    "http://localhost:8080/user/member/kakaologout"
+                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/member/kakaologout`
                 );
 
             window.location.href = kakaoLogoutUrl;

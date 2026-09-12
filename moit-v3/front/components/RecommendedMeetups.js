@@ -22,8 +22,8 @@ function RecommendedMeetups({ recommendedMeetups = [], onMeetupClick }) {
                                     <img
                                         src={
                                             item.imagePath
-                                                ? `http://localhost:8080/upload/meetup/${item.imagePath}`
-                                                : "http://localhost:8080/upload/no-image.png"
+                                                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/meetup/${item.imagePath}`
+                                                : `${process.env.NEXT_PUBLIC_API_BASE_URL}/upload/no-image.png`
                                         }
                                         alt={item.title}
                                     />

@@ -31,8 +31,8 @@ public class ApiScheduledTask {
 	}
 	
 	// 관리자 신고 이력 3년 경과 시 자동 삭제
-//	@Scheduled(cron = "0 0 3 * * *")
-	@Scheduled(cron = "0 0/5 * * * *")
+//	@Scheduled(cron = "0 0/5 * * * *")
+	@Scheduled(cron = "0 0 3 * * *")
 	public void threeYearsAgoDeleteAuditLogs() { 
 		log.info("[SCHEDULER] Audit Log 정리 스케줄러 실행");
 		try {

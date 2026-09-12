@@ -6,7 +6,7 @@ import ReviewComments from './ReviewComment';
 
 const { Text, Paragraph } = Typography;
 
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const getImageUrl = (imgItem) => {
   if (!imgItem) return null;
