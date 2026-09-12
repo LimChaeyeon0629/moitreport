@@ -147,7 +147,11 @@ export function* updateAdminReport(action) {
         yield put(updateAdminReportSuccess(result.data));
         
     } catch(err) {
-        yield put(updateAdminReportFailure(err.response?.data?.message || err.message));
+        yield put(updateAdminReportFailure(
+            err.response?.data?.error ||
+            err.response?.data?.message ||
+            err.message
+        ));
     }
 }
 
