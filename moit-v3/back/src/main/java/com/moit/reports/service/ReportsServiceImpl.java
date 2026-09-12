@@ -182,7 +182,7 @@ public class ReportsServiceImpl implements ReportsService {
 		}
 
 		try {
-			Thread.sleep(5000);		// 동시 처리 테스트용, 나중에 반드시 삭제
+//			Thread.sleep(5000);		// 동시 처리 테스트용, 나중에 반드시 삭제
 			
 			// PEDING 상태 조회
 			Report report = getPendingReport(reportId);
@@ -211,16 +211,20 @@ public class ReportsServiceImpl implements ReportsService {
 
 			// 이메일 발송 이벤트 생성
 			EmailRequestDto emailDto = sendEmailService.adminReportStatusSendEmail(report, changedStatus);
+			
+			log.info("[REPORT] 신고 처리 DB 작업 완료");
+			log.info("[REPORT] 이메일 이벤트 발행 요청");
 			eventPublisher.publishEvent(emailDto);
+			log.info("[REPORT] 신고 처리 로직 종료 - reportId={}", reportId);
 
 			ReportResponseDto responseDto = ReportResponseDto.from(report);
 			setTargetMemberInfo(report, responseDto);
-
+			
 			return responseDto;
 			
-		} catch (InterruptedException e) {
-		    Thread.currentThread().interrupt();
-		    throw new IllegalStateException("신고 처리 테스트 중 오류가 발생했습니다.", e);
+//		} catch (InterruptedException e) {
+//		    Thread.currentThread().interrupt();
+//		    throw new IllegalStateException("신고 처리 테스트 중 오류가 발생했습니다.", e);
 
 		} finally {
 			reportLockService.unlock(reportId);
