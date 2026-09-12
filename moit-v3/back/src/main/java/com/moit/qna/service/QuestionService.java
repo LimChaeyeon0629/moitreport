@@ -23,12 +23,17 @@ import com.moit.qna.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionMapper questionMapper;
     private final QuestionAiAnalysisService questionAiAnalysisService;
     private final QuestionRepository questionRepository;
+    
+    @Value("${resource.path}")
+    private String resourcePath;
 
     // 관리자 전체 문의 목록 조회 (페이징)
     public List<QuestionResponseDto> getList(
@@ -96,7 +101,7 @@ public class QuestionService {
         questionMapper.insertQuestion(dto);
         // 문의 이미지 저장
         if (dto.getImages() != null && !dto.getImages().isEmpty()) {
-            Path uploadPath = Paths.get("C:/upload/qna");
+            Path uploadPath = Paths.get(resourcePath, "qna");
             try {
             	Files.createDirectories(uploadPath);
                 for (MultipartFile file : dto.getImages()) {
@@ -150,7 +155,7 @@ public class QuestionService {
         // 기존 이미지 삭제
         if(dto.getDeleteImageIds()!=null&&!dto.getDeleteImageIds().isEmpty()){
             List<QuestionImageDto> deleteImages=questionMapper.findQuestionImagesByIds(dto.getDeleteImageIds());
-            Path uploadPath=Paths.get("C:/upload/qna");
+            Path uploadPath=Paths.get(resourcePath, "qna");
             for(QuestionImageDto image:deleteImages){
                 if(image.getStoredName()==null)continue;
                 try{Files.deleteIfExists(uploadPath.resolve(image.getStoredName()));}
@@ -160,7 +165,7 @@ public class QuestionService {
         }
         // 새 이미지 저장
         if (dto.getImages() != null && !dto.getImages().isEmpty()) {
-            Path uploadPath = Paths.get("C:/upload/qna");
+            Path uploadPath = Paths.get(resourcePath, "qna");
             try {
                 Files.createDirectories(uploadPath);
                 for (MultipartFile file : dto.getImages()) {
@@ -201,7 +206,7 @@ public class QuestionService {
         List<QuestionImageDto> images = questionMapper.findQuestionImages(questionId);
         // 2. 실제 파일 삭제
         if (images != null) {
-            Path uploadPath = Paths.get("C:/upload/qna");
+            Path uploadPath = Paths.get(resourcePath, "qna");
             for (QuestionImageDto image : images) {
                 if (image.getStoredName() == null) {continue;}
                 Path filePath = uploadPath.resolve(image.getStoredName());

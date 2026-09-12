@@ -44,6 +44,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.nio.file.Paths;
+import org.springframework.beans.factory.annotation.Value;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -59,8 +62,10 @@ public class AdvertisementController {
     private final TossPaymentService tossPaymentService;
 //    private final AdvertisementPaymentRepository advertisementPaymentRepository;
 
-    private static final String UPLOAD_PATH = "C:/upload/ad/";
+//    private static final String UPLOAD_PATH = "C:/upload/ad/";
     
+    @Value("${resource.path}")
+    private String resourcePath;
     
     // 사용자 id
     private Long getLoginMemberId(Authentication authentication) {
@@ -142,7 +147,7 @@ public class AdvertisementController {
             // 이미지 등록
             if (imageFiles != null && imageTypes != null) {
 
-                File dir = new File(UPLOAD_PATH);
+            	File dir = Paths.get(resourcePath, "ad").toFile();
 
                 if (!dir.exists()) {
                     dir.mkdirs();

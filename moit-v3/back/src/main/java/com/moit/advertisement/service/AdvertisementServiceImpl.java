@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -72,6 +73,8 @@ import com.moit.member.repository.PointHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -97,7 +100,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final MailService mailService;
     private final AdvertisementAiSummaryRepository aiSummaryRepository;
 
-    private static final String UPLOAD_PATH = "C:/upload/ad";
+//  private static final String UPLOAD_PATH = "C:/upload/ad";
+    
+    @Value("${resource.path}")
+    private String resourcePath;
 
     // =========================================================
     // 관리자 탭별 전용 구현 메서드
@@ -758,7 +764,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 	             );
 	         }
 	
-	         File directory = new File(UPLOAD_PATH);
+//	         File directory = new File(UPLOAD_PATH);
+	         File directory = Paths.get(resourcePath, "ad").toFile();
 	
 	         if (!directory.exists()
 	                 && !directory.mkdirs()) {
@@ -874,7 +881,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
         String fileName = new File(imageUrl).getName();
 
-        File file = new File(UPLOAD_PATH, fileName);
+        File file = new File(Paths.get(resourcePath, "ad").toFile(), fileName);
 
         if (file.exists()) {
             file.delete();
@@ -2779,7 +2786,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
             File file =
                     new File(
-                            UPLOAD_PATH,
+                    		Paths.get(resourcePath, "ad").toFile(),
                             fileName
                     );
 

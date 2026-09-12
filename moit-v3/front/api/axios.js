@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080",
+    process.env.NEXT_PUBLIC_API_BASE_URL || "",
 
   // HttpOnly Cookie를 서버와 주고받기 위해 필요
   withCredentials: true,
@@ -185,8 +185,7 @@ api.interceptors.response.use(
         await axios.post(
 
           `${
-            process.env.NEXT_PUBLIC_API_BASE_URL ||
-            "http://localhost:8080"
+            process.env.NEXT_PUBLIC_API_BASE_URL || ""
           }/api/members/refresh`,
 
           {

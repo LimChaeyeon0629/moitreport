@@ -474,10 +474,8 @@ function ReportDetailPage() {
                                 : '-'}
                         </Descriptions.Item>
 
-                        <Descriptions.Item label="처리 관리자 (adminMemberId)">
+                        <Descriptions.Item label="처리 관리자">
                             {log.adminNickname || '-'}
-                            {' '}
-                            ({log.adminMemberId || '-'})
                         </Descriptions.Item>
 
                         <Descriptions.Item label="처리 상태">

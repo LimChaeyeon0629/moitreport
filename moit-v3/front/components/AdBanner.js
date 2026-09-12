@@ -14,7 +14,7 @@ function AdBanner({ position }) {
     const [ad, setAd] = useState(null);
 
     const API_BASE_URL =
-        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
+        process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
     // 한 번의 화면 렌더링에서 노출 API 중복 호출 방지
     const impressionSent = useRef(false);
