@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.moit.reports.api.ApiScheduledTask;
 import com.moit.reports.dto.AiReportAnalysisDto;
 import com.moit.reports.enums.ReasonCode;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor // 꼭 필요한 필드만 생성
 public class RagService { // 실제 RAG 작업
@@ -108,12 +111,23 @@ public class RagService { // 실제 RAG 작업
 
 	// 유사 사례 검색
 	public List<RagChunk> searchSimilarChunksByDocument(String query, String documentName, int topK) {
+		log.info("[RAG] 현재 신고 내용 Embedding 생성 요청");
 		List<Double> queryEmbedding = aiService.createEmbedding(query);
-		return chunks.stream().filter(chunk -> documentName.equals(chunk.getDocumentName())).sorted((a, b) -> {
-			double similarityA = cosineSimilarity(queryEmbedding, a.getEmbedding());
-			double similarityB = cosineSimilarity(queryEmbedding, b.getEmbedding());
-			return Double.compare(similarityB, similarityA);
-		}).limit(topK).toList();
+		log.info("[RAG] Embedding 생성 완료");
+		
+	    log.info("[RAG] Cosine Similarity 계산 시작");
+	    List<RagChunk> result = chunks.stream()
+	            .filter(chunk -> documentName.equals(chunk.getDocumentName()))
+	            .sorted((a, b) -> {
+	                double similarityA = cosineSimilarity(queryEmbedding, a.getEmbedding());
+	                double similarityB = cosineSimilarity(queryEmbedding, b.getEmbedding());
+	                return Double.compare(similarityB, similarityA);
+	            })
+	            .limit(topK)
+	            .toList();
+	    log.info("[RAG] Cosine Similarity 계산 완료 - 상위 {}건 선택", result.size());
+	    
+		return result;
 	}
 
 	// 얼마나 비슷한지 유사도 계산
@@ -133,9 +147,13 @@ public class RagService { // 실제 RAG 작업
 	}
 
 	public String analyzeReport(Long reportId) {
-		// reportContext - DB에서 조회한 현재 신고 데이터 + 신고 대상 원문 조회
+		
+		log.info("[RAG] 신고 분석 시작 - reportId={}", reportId);
+		
+		// DB 현재 신고 + 신고 대상 원문 조회
 		ReportAiContext reportContext = reportAiContextService.getReportContext(reportId);
-
+		log.info("[RAG] 신고 및 신고 대상 원문 조회 완료");
+		
 		String reasonKeyword = switch (reportContext.getReasonCode()) {
 		case ABUSE -> "욕설 비방 모욕";
 		case SPAM -> "도배 스팸 반복 게시";
@@ -157,29 +175,37 @@ public class RagService { // 실제 RAG 작업
 				reportContext.getTargetType(), reportContext.getTargetTitle(), reportContext.getTargetContent());
 
 		// 운영 정책 검색
+		log.info("[RAG] 운영 정책 검색 시작");
 		List<RagChunk> policyChunks = getPolicyChunksByReasonCode(reportContext.getReasonCode());
+		log.info("[RAG] 운영 정책 검색 완료 - {}건", policyChunks.size());
 		// 유사 사례 검색
+		log.info("[RAG] 과거 유사 사례 검색 시작");
 		List<RagChunk> caseChunks = searchSimilarChunksByDocument(searchQuery, "report-cases.pdf", 2);
-
+		log.info("[RAG] 과거 유사 사례 검색 완료 - {}건", caseChunks.size());
+		
 		// 정책 + 사례 합치기
 		List<RagChunk> similarChunks = new ArrayList<>();
 		similarChunks.addAll(policyChunks);
 		similarChunks.addAll(caseChunks);
-
+		log.info("[RAG] GPT 참고 문서 구성 - 총 {}건", similarChunks.size());
+		
 		// contextBuilder - 검색된 참고자료를 하나의 문자열로 합치기
 		StringBuilder contextBuilder = new StringBuilder();
 
 		for (RagChunk chunk : similarChunks) {
-			contextBuilder.append("[참고 문서: ").append(chunk.getDocumentName()).append(" / ").append(chunk.getTitle())
+			contextBuilder.append("[참고 문서: ")
+					.append(chunk.getDocumentName())
+					.append(" / ")
+					.append(chunk.getTitle())
 					.append("]\n");
 
 			contextBuilder.append(chunk.getContent()).append("\n\n");
 		}
 
-		// ragContext - GPT에게 줄 참고 문서
+		// GPT에게 줄 참고 문서
 		String ragContext = contextBuilder.toString();
 
-		// currentReport - GPT에게 알려줄 현재 신고 정보
+		// GPT에게 알려줄 현재 신고 정보
 		AiReportAnalysisDto aiReportContext = new AiReportAnalysisDto();
 
 		aiReportContext.setReasonCode(reportContext.getReasonCode());
@@ -188,8 +214,12 @@ public class RagService { // 실제 RAG 작업
 		aiReportContext.setTargetId(reportContext.getTargetId());
 		aiReportContext.setTargetTitle(reportContext.getTargetTitle());
 		aiReportContext.setTargetContent(reportContext.getTargetContent());
+		log.info("[RAG] GPT 분석 요청");
 
 		// 현재 신고 + 검색 근거를 GPT에게 전달
-		return aiService.askToGptWithContext(ragContext, aiReportContext);
+		String result = aiService.askToGptWithContext(ragContext, aiReportContext);
+		log.info("[RAG] GPT 분석 완료 - reportId={}", reportId);
+		
+		return result;
 	}
 }

@@ -213,6 +213,7 @@ public class ReportsServiceImpl implements ReportsService {
 			EmailRequestDto emailDto = sendEmailService.adminReportStatusSendEmail(report, changedStatus);
 			
 			log.info("[REPORT] 신고 처리 DB 작업 완료");
+			log.info("[REPORT] 처리 Thread = {}", Thread.currentThread().getName());
 			log.info("[REPORT] 이메일 이벤트 발행 요청");
 			eventPublisher.publishEvent(emailDto);
 			log.info("[REPORT] 신고 처리 로직 종료 - reportId={}", reportId);
@@ -395,7 +396,13 @@ public class ReportsServiceImpl implements ReportsService {
 	@Transactional
 	public long deleteAuditLogs() {
 		LocalDateTime cutoff = LocalDateTime.now().minusYears(3);
-		return reportAuditLogRepository.deleteByProcessedAtBefore(cutoff);
+		
+		log.info("[AUDIT] 3년 경과 Audit Log 정리 시작");
+	    log.info("[AUDIT] 삭제 기준 시점 = {}", cutoff);
+	    long deletedCount = reportAuditLogRepository.deleteByProcessedAtBefore(cutoff);
+        log.info("[AUDIT] 3년 경과 Audit Log 정리 완료 - 삭제 건수={}", deletedCount);
+	    
+		return deletedCount;
 	}
 	
 	

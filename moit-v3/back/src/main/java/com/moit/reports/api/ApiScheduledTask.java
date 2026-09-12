@@ -31,11 +31,13 @@ public class ApiScheduledTask {
 	}
 	
 	// 관리자 신고 이력 3년 경과 시 자동 삭제
-	@Scheduled(cron = "0 0 3 * * *")
+//	@Scheduled(cron = "0 0 3 * * *")
+	@Scheduled(cron = "0 0/5 * * * *")
 	public void threeYearsAgoDeleteAuditLogs() { 
+		log.info("[SCHEDULER] Audit Log 정리 스케줄러 실행");
 		try {
 			long deletedCount = service.deleteAuditLogs();
-			log.info("삭제된 관리자 처리 이력: {}건", deletedCount);
+			log.info("[SCHEDULER] Audit Log 정리 스케줄러 완료 - 삭제 건수={}", deletedCount);
 			
 		} catch (Exception e) {
 			log.error("3년 경과 관리자 처리 이력 삭제 중 오류 발생", e);
