@@ -22,7 +22,7 @@ MOIT는 목적형 모임 커뮤니티 플랫폼으로, 기술 스택을 발전�
 
 * **Tech Stack:** Spring Boot, Thymeleaf, MyBatis, Oracle, Ajax, Open API
 * **Features:** Spring Boot로 마이그레이션, 프로젝트 구조 개선 및 기능 고도화
-* 📁 README: moit-v2/README.md
+* 📁 README: [moit-v2/README.md](https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v2)
 * 📖 Notion: https://app.notion.com/p/MoA-37195798f73380cebe19e12b11b69dad?source=copy_link
 
 ### MOIT v3
