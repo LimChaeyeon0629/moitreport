@@ -28,14 +28,10 @@
 
 ### 🚨 신고 관리 기능
 
-* 모집글 신고 / 후기 신고
-* 사용자 신고 작성 / 조회 / 수정 / 삭제
 * 중복 신고 방지
 * 본인 작성 글 신고 방지
 * OpenAI GPT API 기반 신고 사유 문장 생성
-* 관리자 신고 목록 및 상세 조회
-* 관리자 신고 승인 / 반려 / 삭제 처리
-* 신고 처리 상태 관리
+* 관리자 신고 승인 / 삭제 외 반려 기능 추가
 * SMTP 기반 신고 처리 결과 메일 자동 발송
 * 신고 처리 3일 후 만족도 메일 자동 발송
 
@@ -48,7 +44,7 @@
 | Front-End     | HTML5, CSS3, JavaScript, Thymeleaf                              |
 | Back-End      | Java 17, Spring Boot, Spring Security, OAuth2, MyBatis          |
 | Database      | Oracle                                                          |
-| AI & Open API | OpenAI GPT API, HIBP API, 기상청 단기예보 API, VWorld API, 네이버 MAP API |
+| AI & Open API | OpenAI GPT API |
 | Mail          | SMTP                                                            |
 | Collaboration | Git, GitHub, Notion                                             |
 
