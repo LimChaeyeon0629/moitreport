@@ -54,8 +54,7 @@
 * 신고 접수부터 관리자 승인·반려·삭제까지 이어지는 End-to-End 관리 프로세스 구축
 * JSP-MyBatis 기반의 MVC 패턴을 준수하여 화면 요청부터 DB 저장/조회까지의 전체 데이터 흐름 구현
 
-* 사용자 신고 작성 →
-  <img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" />
+* 사용자 신고 작성 → <img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" />
 
 
 * 사용자 신고 수정 ===
