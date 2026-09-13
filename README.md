@@ -44,7 +44,6 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 
 * **Tech Stack:** Spring Framework, JSP, MyBatis, MySQL, Ajax
 * **Features:** 회원가입/로그인, 모임 등록 및 신청, 문의, 후기, 신고, 광고
-* **Report Features:** 모집글 / 후기 신고, 사용자 신고 CRUD, 관리자 신고 목록 및 상세 조회, 관리자 신고 승인 / 삭제 처리
 * 📁 README: [moit-v1/README.md](https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v1)
 * 📖 Notion: https://app.notion.com/p/MoA-37195798f73380cebe19e12b11b69dad?source=copy_link
 
