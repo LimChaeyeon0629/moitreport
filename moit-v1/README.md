@@ -1,51 +1,5 @@
 # 🚀 MOIT (모잇)
 
-MOIT v1 (소모임 플랫폼) - JSP + MyBatis 기반 CRUD
-
-프로젝트 목표	- 모임 생성·참여 및 사용자 간 소통을 지원하는 웹 서비스 구현
-- 사용자 신고부터 관리자 처리까지 운영 프로세스 구축
-
-기간 / 인원:
-- 2026.06.12 ~ 2026.06.22 (6명)
-
-개발 언어:
-- Java 11, Spring, JSP, Servlet, MyBatis, MySQL, JavaScript, Git, GitHub, Notion
-
-주요기능
-- 신고 접수부터 관리자 승인·반려·삭제까지 이어지는 End-to-End 관리 프로세스 구축
-- JSP-MyBatis 기반의 MVC 패턴을 준수하여 화면 요청부터 DB 저장/조회까지의 전체 데이터 흐름 구현
- 	 
-트러블슈팅 
-1.	[페이징] 관리자 신고 목록 조회 오류
-- 문제: 페이지 이동 과정에서 데이터 누락, 예상한 범위와 다르게 조회되는 문제 발생
-- 해결: Controller 파라미터와 페이징 조건 전달 과정 확인 후 페이지 번호와 조회 범위 계산 로직 수정
-- 성과: 관리자 신고 목록의 페이지 이동과 조회 결과가 일관되게 동작하도록 개선
-
-2.	[데이터 매핑] DB 값과 JSP 화면 표시 불일치 해결
-- 문제: DB에는 수정 시간이 저장되어 있었지만 신고 상세 화면에는 값이 표시되지 않는 문제 발생
-- 해결: 전달 경로를 추적하여 updated_at 컬럼 누락 확인 및 수정
-- 성과: Mapper와 DTO, View 사이의 데이터 매핑 흐름을 이해하고 화면 표시 오류 해결
-
-프로젝트 소감
-- JSP와 MyBatis를 활용해 신고 CRUD와 관리자 처리 기능을 구현하며 데이터 흐름을 이해
-- 반복되는 조회 로직과 화면·백엔드 결합 구조를 개선하고 싶다는 필요성 느낌
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 📌 프로젝트 소개
 
 **MOIT(모잇)** 는 스터디, 프로젝트, 운동, 취미 활동 등 **공통의 관심사와 목표를 가진 사람들이 모임을 만들고 참여할 수 있는 목적형 커뮤니티 플랫폼**입니다.
@@ -95,25 +49,29 @@ MOIT v1 (소모임 플랫폼) - JSP + MyBatis 기반 CRUD
 
 ## 🔥 주요 기능
 
-### 👤 회원 기능
+* 신고 접수부터 관리자 승인·반려·삭제까지 이어지는 End-to-End 관리 프로세스 구축
+* JSP-MyBatis 기반의 MVC 패턴을 준수하여 화면 요청부터 DB 저장/조회까지의 전체 데이터 흐름 구현
 
-* 회원가입
-* 로그인
+* 사용자 신고 작성
+<img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" />
 
-### 🤝 모임 기능
+* 사용자 신고 수정
+  <img width="446" height="247" alt="image" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" />
 
-* 모임 모집글 작성
-* 모집글 조회
-* 모집글 수정 및 삭제
-* 모임 신청
+* 사용자 신고 목록
+  <img width="468" height="264" alt="image" src="https://github.com/user-attachments/assets/2496047f-acaf-4344-a7a6-41ed965b3f39" />
 
-### 📝 후기 기능
+* 사용자 신고 상세보기
+  <img width="446" height="264" alt="image" src="https://github.com/user-attachments/assets/cef63121-35c6-40b8-b148-28688b7a4814" />
 
-* 후기 작성
-* 후기 조회
-* 후기 좋아요
-* 후기 수정 및 삭제
+* 관리자 신고 목록
+  <img width="468" height="250" alt="image" src="https://github.com/user-attachments/assets/22176e39-925a-4c3a-89a8-7837bfcae3ed" />
 
+* 관리자 신고 상세보기
+  <img width="446" height="249" alt="image" src="https://github.com/user-attachments/assets/198a5e92-34ae-45ca-8a02-a8f0f3048681" />
+
+---
+ 
 ### 🚨 신고 기능
 
 * 모집글 신고
@@ -121,25 +79,11 @@ MOIT v1 (소모임 플랫폼) - JSP + MyBatis 기반 CRUD
 * 신고 내역 관리
 * 관리자 신고 처리
 
-### 📢 광고 기능
-
-* 광고 등록
-* 광고 상태 확인
-* 광고 수정 및 삭제
-* 광고 노출 관리
-
 ---
 
 ## 💡 개발 특징
 
-* 관심사 기반 소모임 플랫폼
-* 모집글 작성 및 신청 기능
-* 후기 및 좋아요 기능
 * 신고 시스템을 통한 안전한 커뮤니티 환경 제공
-* 광고 등록 및 관리 기능
-* 사용자 친화적인 UI 제공
-
-> 향후 관심사 기반 모임 추천 기능 추가 예정
 
 ---
 
@@ -183,15 +127,6 @@ MOIT v1 (소모임 플랫폼) - JSP + MyBatis 기반 CRUD
 같은 관심사와 목표를 가진 사람들이 모여 함께 성장하는 목적형 커뮤니티 플랫폼
 
 ## 🎥 프로젝트 시연
-- 회원가입 및 로그인
-🔗 https://www.youtube.com/watch?v=qlZsblUcrpQ
-- 모임 등록 및 신청
-🔗 https://youtu.be/W8uqEza0bNc
-- 문의 등록
-🔗https://www.youtube.com/watch?v=PCCIJsmrKG8
-- 후기 등록
-🔗 https://www.youtube.com/watch?v=pyTIHHSDAqs&feature=youtu.be
 - 신고 등록
 🔗 https://www.youtube.com/watch?v=QSb3lZ5VrFA&feature=youtu.be
-- 광고
-🔗 https://www.youtube.com/watch?v=NZkUY0mHTUU&feature=youtu.be
+
