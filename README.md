@@ -15,7 +15,7 @@ MOIT는 목적형 모임 커뮤니티 플랫폼으로, 기술 스택을 발전�
 
 * **Tech Stack:** Spring Framework, JSP, MyBatis, MySQL, Ajax
 * **Features:** 회원가입/로그인, 모임 등록 및 신청, 문의, 후기, 신고, 광고
-* 📁 README: moit-v1/README.md
+* 📁 README: [moit-v1/README.md](https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v1)
 * 📖 Notion: https://app.notion.com/p/MoA-37195798f73380cebe19e12b11b69dad?source=copy_link
 
 ### MOIT v2
