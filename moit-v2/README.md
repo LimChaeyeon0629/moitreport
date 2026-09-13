@@ -6,7 +6,7 @@
 
 **MOIT(모잇)** 는 스터디, 프로젝트, 운동, 취미 활동 등 **공통의 관심사와 목표를 가진 사람들이 모임을 만들고 참여할 수 있는 목적형 커뮤니티 플랫폼**입니다.
 
-1차 프로젝트에서 기본적인 소모임 플랫폼을 구축한 후, 2차 프로젝트에서는 **Spring Boot 기반으로 리팩토링하고 AI 및 다양한 Open API를 적용하여 서비스 편의성과 기능 확장성을 높였습니다.**
+1차 프로젝트에서 기본적인 소모임 플랫폼을 구축한 후, 2차 프로젝트에서는 **Spring Boot 기반으로 구조를 리팩토링하고 AI 및 다양한 Open API를 적용하여 서비스 편의성과 기능 확장성을 높였습니다.**
 
 ---
 
@@ -39,14 +39,14 @@
 
 ## 🛠 기술 스택
 
-| 구분            | 기술                                                              |
-| ------------- | --------------------------------------------------------------- |
-| Front-End     | HTML5, CSS3, JavaScript, Thymeleaf                              |
-| Back-End      | Java 17, Spring Boot, Spring Security, OAuth2, MyBatis          |
-| Database      | Oracle                                                          |
-| AI & Open API | OpenAI GPT API |
-| Mail          | SMTP                                                            |
-| Collaboration | Git, GitHub, Notion                                             |
+| 구분            | 기술                                                     |
+| ------------- | ------------------------------------------------------ |
+| Front-End     | HTML5, CSS3, JavaScript, Thymeleaf                     |
+| Back-End      | Java 17, Spring Boot, Spring Security, OAuth2, MyBatis |
+| Database      | Oracle                                                 |
+| AI & Open API | OpenAI GPT API                                         |
+| Mail          | SMTP                                                   |
+| Collaboration | Git, GitHub, Notion                                    |
 
 ### 🤝 협업 방식
 
@@ -83,9 +83,9 @@
 
 ## 🔥 주요 기능
 
-2차 프로젝트에서는 기존 기능을 Spring Boot 기반으로 리팩토링하고, **OpenAI GPT API와 다양한 외부 API를 활용한 사용자 지원 기능을 추가**했습니다.
+2차 프로젝트에서는 기존 신고 기능을 Spring Boot 기반으로 리팩토링하고, **OpenAI GPT API와 메일 발송 기능을 활용하여 신고 기능의 편의성과 운영 기능을 확장했습니다.**
 
-### 🚨 신고
+### 🚨 신고 관리
 
 #### 1차 기능
 
@@ -95,30 +95,55 @@
 * 관리자 신고 목록 및 상세 조회
 * 관리자 신고 승인 / 삭제 처리
 
-#### 2차 고도화
+---
 
-* 중복 신고 방지
-<img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/90045ded-1937-4b4d-858e-5153eb467b1b" />
+### 2차 고도화
 
-  
-* 본인 작성 글 신고 방지
-  <img width="446" height="236" alt="image" src="https://github.com/user-attachments/assets/20fc4e76-96e4-456b-b956-a293d7ead320" />
+#### 중복 신고 방지
 
-  
-* OpenAI GPT API 기반 신고 사유 문장 생성
-<img width="468" height="269" alt="image" src="https://github.com/user-attachments/assets/c2e61e9e-348c-46f6-8421-76fe8a05626b" />
+동일한 사용자가 같은 게시글을 반복해서 신고하지 못하도록 중복 신고 방지 기능을 구현했습니다.
 
-  
-* 관리자 신고 승인 / 반려 / 삭제 상태 변경
-<img width="446" height="268" alt="image" src="https://github.com/user-attachments/assets/a6252cdf-31d2-4fe8-854b-f941b7894430" />
+<img width="700" alt="중복 신고 방지" src="https://github.com/user-attachments/assets/90045ded-1937-4b4d-858e-5153eb467b1b" />
 
-  
-* SMTP 기반 신고 처리 결과 메일 자동 발송
-<img width="504" height="272" alt="image" src="https://github.com/user-attachments/assets/c006981e-421c-4f77-aeb3-4d73f3a3a373" />
+<br>
 
-  
-* 신고 처리 3일 후 만족도 메일 자동 발송
-<img width="481" height="282" alt="image" src="https://github.com/user-attachments/assets/e3c0411c-93e4-44c6-b201-5a6090f8e2a8" />
+#### 본인 작성 글 신고 방지
+
+사용자가 자신이 작성한 모집글이나 후기를 직접 신고하지 못하도록 신고 대상 검증 기능을 구현했습니다.
+
+<img width="700" alt="본인 작성 글 신고 방지" src="https://github.com/user-attachments/assets/20fc4e76-96e4-456b-b956-a293d7ead320" />
+
+<br>
+
+#### OpenAI GPT API 기반 신고 사유 문장 생성
+
+사용자가 신고 내용을 작성할 때 입력한 내용을 기반으로 **OpenAI GPT API가 신고 사유 문장을 생성할 수 있도록 구현했습니다.**
+
+<img width="700" alt="OpenAI GPT API 신고 사유 문장 생성" src="https://github.com/user-attachments/assets/c2e61e9e-348c-46f6-8421-76fe8a05626b" />
+
+<br>
+
+#### 관리자 신고 상태 변경
+
+관리자가 신고 상세 내용을 확인한 뒤 **승인 / 반려 / 삭제 상태로 변경할 수 있도록 구현했습니다.**
+
+<img width="700" alt="관리자 신고 상태 변경" src="https://github.com/user-attachments/assets/a6252cdf-31d2-4fe8-854b-f941b7894430" />
+
+<br>
+
+#### 신고 처리 결과 메일 자동 발송
+
+관리자가 신고를 처리하면 신고자에게 처리 결과를 안내하는 메일이 자동으로 발송되도록 SMTP 기반 메일 기능을 구현했습니다.
+
+<img width="700" alt="신고 처리 결과 메일" src="https://github.com/user-attachments/assets/c006981e-421c-4f77-aeb3-4d73f3a3a373" />
+
+<br>
+
+#### 신고 처리 3일 후 만족도 메일 발송
+
+신고 처리 완료 후 3일이 지나면 사용자에게 신고 처리에 대한 만족도를 확인할 수 있는 메일이 자동으로 발송되도록 구현했습니다.
+
+<img width="700" alt="신고 처리 만족도 메일" src="https://github.com/user-attachments/assets/e3c0411c-93e4-44c6-b201-5a6090f8e2a8" />
 
 ---
 
@@ -140,38 +165,50 @@
 ### 1. [검색 / 페이징] 관리자 신고 검색 기능 오류
 
 **문제**
-* 검색 조건과 상태별 버튼 필터를 함께 사용할 경우 조회 조건 충돌 문제가 발생했습니다.
+
+* 검색 조건과 상태별 버튼 필터를 함께 사용할 경우 조회 조건이 충돌하여 원하는 신고 목록이 정상적으로 조회되지 않는 문제가 발생했습니다.
 
 **해결**
-* 검색 조건과 상태 조건의 처리 흐름을 분리하고 MyBatis 쿼리와 요청 파라미터 전달 과정을 변경했습니다.
+
+* 검색 조건과 상태 조건의 처리 흐름을 분리하고, MyBatis 쿼리와 Controller 요청 파라미터 전달 과정을 확인하여 복합 조건이 함께 적용될 수 있도록 수정했습니다.
 
 **성과**
-* 관리자 신고 목록의 검색 및 페이징 기능을 안정화 했고, 복합 조회 조건 처리 방식에 대한 이해가 향상 되었습니다.
-  
+
+* 관리자 신고 목록의 검색 및 페이징 기능이 안정적으로 동작하도록 개선했습니다.
+* 여러 조회 조건이 동시에 적용될 경우 요청 파라미터부터 MyBatis 쿼리까지 전체 흐름을 함께 확인해야 한다는 점을 경험했습니다.
+
 ---
 
 ### 2. [정책 설계] 하루 신고 횟수 제한 방식 재검토
 
 **문제**
-* 신고 남용 방지를 위해 하루 최대 5회 제한을 적용했으나 과도한 제한이 될 수 있다고 판단했습니다.
+
+* 신고 남용을 방지하기 위해 하루 최대 5회 신고 제한을 적용했으나, 정상적인 신고 활동까지 제한할 수 있어 과도한 정책이 될 수 있다고 판단했습니다.
 
 **해결**
-* 단순 횟수 제한 방식은 삭제하고 동일 신고 누적 패턴을 분석하거나 IP 기반 남용 탐지처럼 실제 악용 행위를 판별하는 방식으로 개선 방향성 구상했습니다.
+
+* 단순한 횟수 제한 방식은 삭제하고, 동일 신고 누적 패턴 분석이나 IP 기반 남용 탐지 등 실제 악용 행위를 판별할 수 있는 방향으로 개선 방안을 검토했습니다.
 
 **성과**
-* 기능 제한만 추가하는 것보다 실제 사용자 행동과 운영 정책을 함께 고려해야 함을 경험했습니다.
+
+* 단순히 기능에 제한을 추가하는 것보다 실제 사용자 행동과 서비스 운영 정책을 함께 고려하여 기능을 설계해야 한다는 점을 경험했습니다.
 
 ---
 
 ## 🎥 시연 영상
 
-### 신고 등록
+### 신고 기능
 
-🔗 [https://www.youtube.com/watch?v=QSb3lZ5VrFA&feature=youtu.be](https://www.youtube.com/watch?v=BbsZr3dRHZ0)
+🔗 https://www.youtube.com/watch?v=BbsZr3dRHZ0
 
 ---
 
 ## 📝 회고
 
-검색 조건 충돌과 배치 쿼리 개선점을 직접 확인하면서, 기능이 동작하는 것뿐 아니라 데이터 정합성과 운영 정책까지 함께 검토해야 한다는 점을 배웠습니다.
-동시 처리, 실시간 점수 반영, 신고 남용 탐지 등의 한계를 V3에서 Redis Lock, 즉시 반영 방식, RAG 등으로 확장하는 계기로 뻗어 나갔습니다.
+Spring Boot 기반으로 기존 신고 기능을 리팩토링하고 OpenAI GPT API와 메일 발송 기능을 추가하면서, 단순한 CRUD 구현을 넘어 사용자 편의성과 실제 운영 상황을 고려한 기능을 구현해볼 수 있었습니다.
+
+특히 관리자 신고 목록의 검색 조건과 상태 필터가 충돌하는 문제를 해결하며 Controller의 요청 파라미터부터 MyBatis 조회 쿼리까지 데이터 흐름을 직접 추적하는 경험을 할 수 있었습니다.
+
+또한 신고 남용 방지를 위해 적용했던 하루 신고 횟수 제한 정책을 다시 검토하면서, 기능이 정상적으로 동작하는 것뿐 아니라 실제 사용자 행동과 운영 정책까지 함께 고려해야 한다는 점을 배웠습니다.
+
+이 과정에서 확인한 동시 처리, 실시간 신뢰도 점수 반영, 신고 남용 탐지 등의 한계를 바탕으로 이후 v3에서는 **Redis Lock을 활용한 중복 처리 방지, 신뢰도 점수 즉시 반영, Audit Log, RAG 기반 관리자 신고 판단 보조 기능 등으로 신고 시스템을 더욱 확장했습니다.**
