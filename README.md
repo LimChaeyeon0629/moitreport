@@ -1,13 +1,41 @@
-# 🚀 MOIT Project History
+# 🚀 MOIT Report Portfolio
 
-MOIT는 목적형 모임 커뮤니티 플랫폼으로, 기술 스택을 발전시키며 여러 버전으로 개발한 프로젝트입니다.
+MOIT 팀 프로젝트에서 담당한 **사용자 신고 및 관리자 신고 처리 기능**을 중심으로,
+v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개인 포트폴리오 저장소입니다.
 
-| Version | Tech Stack                                              | 주요 내용                               |
-| ------- | ------------------------------------------------------- | ----------------------------------- |
-| **v1**  | Spring Framework, JSP, MyBatis, MySQL, Ajax             | 기본 기능 구현 (회원, 모임, 문의, 후기, 신고, 광고)   |
-| **v2**  | Spring Boot, Thymeleaf, MyBatis, Oracle, Ajax, Open API | Spring Boot 기반으로 프로젝트 리팩토링 및 기능 고도화 |
-| **v3**  | (예정)                                                    | 기능 확장 및 성능 개선                       |
-| **v4**  | (예정)                                                    | 추가 기능 개발                            |
+## 🌐 Deployment
+
+- **Service URL**: https://moitreport.duckdns.org/
+- **Repository**: https://github.com/LimChaeyeon0629/moitreport
+- **Deployment**: AWS EC2 / Nginx / PM2 / Docker
+- **Backend**: Spring Boot
+- **Frontend**: Next.js
+- **Database**: Oracle
+- **Cache / Lock**: Redis
+
+## 🙋 My Contribution
+
+제가 담당한 영역은 **사용자 신고 및 관리자 신고 처리 기능**입니다.
+
+### 주요 구현 내용
+
+- 사용자 신고 CRUD
+- 관리자 신고 검색 / 페이징 / 상세 조회
+- 승인 / 반려 / 삭제 처리
+- Redis Lock 기반 중복 처리 방지
+- 신고 승인 시 회원 신뢰도 점수 즉시 반영
+- Audit Log 기반 관리자 처리 이력 저장
+- AFTER_COMMIT + @Async 기반 비동기 이메일 발송
+- 실패 이메일 재전송 처리
+- OpenAI API + RAG 기반 관리자 신고 판단 보조
+
+## 📈 Report Feature Evolution
+
+| Version | Tech Stack | 신고 기능 고도화 |
+| --- | --- | --- |
+| **v1** | Spring Framework, JSP, MyBatis, MySQL | 사용자 신고 CRUD, 관리자 신고 목록/상세/처리 |
+| **v2** | Spring Boot, Thymeleaf, MyBatis, Oracle, OpenAI API | 중복 신고 방지, 본인 신고 방지, AI 신고 사유 생성, 이메일 발송 |
+| **v3** | Spring Boot, React, Next.js, JWT, Redis, JPA, MyBatis, Oracle | Redis Lock, 신뢰도 연계, Audit Log, 비동기 이메일, RAG 기반 관리자 판단 보조 |
 
 ## 📂 Version Details
 
