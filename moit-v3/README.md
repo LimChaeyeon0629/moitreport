@@ -96,12 +96,14 @@
 
 #### 기존 기능
 
+##### 1차
 * 사용자 신고 작성 / 조회 / 수정 / 삭제
 * 사용자 신고 목록 및 상세 조회
 * 관리자 신고 검색 / 페이징 / 상세 조회
 * 관리자 신고 승인 / 반려 처리
 * 신고 처리 결과 이메일 발송
-* 
+
+##### 2차
 * 중복 신고 / 본인 작성 글 신고 방지
 * OpenAI GPT API 기반 신고 사유 문장 생성
 * 관리자 신고 승인 / 반려 / 삭제 상태 변경
@@ -123,7 +125,7 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 #### 동시 처리 차단
 두 번째 신고 처리 요청이 중복 수행되지 않도록 차단
 
-<img width="700" alt="동시 처리 차단" src="https://github.com/user-attachments/assets/a690f4ca-5772-464f-9a86-ce0593fc2180" />
+<img width="500" alt="동시 처리 차단" src="https://github.com/user-attachments/assets/a690f4ca-5772-464f-9a86-ce0593fc2180" />
 
 <br>
 
@@ -131,9 +133,9 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 신고 ID를 기준으로 `lock:report:*` 형태의 Lock을 생성하고 TTL 10초 적용
 Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는지 검증
 
-<img width="700" alt="Redis Lock 생성" src="https://github.com/user-attachments/assets/f5a03730-7a52-4456-b4a0-a1d6b8979b25" />
+<img width="500" alt="Redis Lock 생성" src="https://github.com/user-attachments/assets/f5a03730-7a52-4456-b4a0-a1d6b8979b25" />
 <br>
-<img width="700" alt="Redis Lock TTL 확인" src="https://github.com/user-attachments/assets/8933efa6-1f33-4ba1-a664-be78c634e38a" />
+<img width="500" alt="Redis Lock TTL 확인" src="https://github.com/user-attachments/assets/8933efa6-1f33-4ba1-a664-be78c634e38a" />
 
 <br>
 
@@ -149,7 +151,7 @@ Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는
 #### AFTER_COMMIT + @Async 실행
 신고 처리 트랜잭션이 커밋된 후 비동기 이메일 이벤트가 실행되는 것을 로그를 통해 확인
 
-<img width="700" alt="AFTER_COMMIT 비동기 이메일 실행" src="https://github.com/user-attachments/assets/89159351-481f-467c-9e68-b07c66908180" />
+<img width="500" alt="AFTER_COMMIT 비동기 이메일 실행" src="https://github.com/user-attachments/assets/89159351-481f-467c-9e68-b07c66908180" />
 
 <br>
 
@@ -157,7 +159,7 @@ Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는
 
 실패한 이메일 발송 건을 일정 주기로 다시 처리할 수 있도록 1분 주기의 스케줄러를 구성
 
-<img width="700" alt="실패 이메일 재전송" src="https://github.com/user-attachments/assets/d6011cd5-7609-422a-959f-b2cbe1c6727b" />
+<img width="500" alt="실패 이메일 재전송" src="https://github.com/user-attachments/assets/d6011cd5-7609-422a-959f-b2cbe1c6727b" />
 
 <br>
 
@@ -173,7 +175,7 @@ Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는
 #### AI 신고 판단 결과
 관리자 신고 상세 화면에서 AI 분석 결과와 판단 근거를 확인할 수 있도록 구현
 
-<img width="700" alt="AI 신고 판단 결과" src="https://github.com/user-attachments/assets/65c3c0ca-c7f2-4735-97d6-5cec18297f9b" />
+<img width="500" alt="AI 신고 판단 결과" src="https://github.com/user-attachments/assets/65c3c0ca-c7f2-4735-97d6-5cec18297f9b" />
 
 
 <br>
@@ -181,7 +183,7 @@ Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는
 #### 정책·유사 사례 검색 및 GPT 분석
 신고 내용과 관련성이 높은 정책 및 사례를 검색하고 해당 내용을 GPT Context에 포함하여 분석하도록 구현
 
-<img width="700" alt="정책 유사 사례 검색 및 GPT 분석" src="https://github.com/user-attachments/assets/70f6638f-f443-42f5-afd9-9542bfc14c5f" />
+<img width="500" alt="정책 유사 사례 검색 및 GPT 분석" src="https://github.com/user-attachments/assets/70f6638f-f443-42f5-afd9-9542bfc14c5f" />
 
 <br>
 
@@ -198,14 +200,14 @@ Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는
 #### 관리자 처리 이력
 관리자의 신고 처리 상태, 처리 사유 및 신뢰도 변화를 Audit Log로 확인할 수 있도록 구현
 
-<img width="700" alt="관리자 처리 이력" src="https://github.com/user-attachments/assets/5149a4a9-26cc-4e32-b062-49fa089fea49" />
+<img width="500" alt="관리자 처리 이력" src="https://github.com/user-attachments/assets/5149a4a9-26cc-4e32-b062-49fa089fea49" />
 
 <br>
 
 #### 3년 경과 Audit Log 자동 정리
 처리일 기준 3년이 지난 Audit Log를 자동으로 정리하도록 스케줄러 구성
 
-<img width="700" alt="Audit Log 자동 정리" src="https://github.com/user-attachments/assets/97b05532-b897-4d0d-99f7-0154f0194f66" />
+<img width="500" alt="Audit Log 자동 정리" src="https://github.com/user-attachments/assets/97b05532-b897-4d0d-99f7-0154f0194f66" />
 
 ---
 
