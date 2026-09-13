@@ -49,32 +49,11 @@
 
 ---
 
-## 🔥 주요 기능
+## 👥 Team
 
-* 신고 접수부터 관리자 승인·반려·삭제까지 이어지는 End-to-End 관리 프로세스 구축
-* JSP-MyBatis 기반의 MVC 패턴을 준수하여 화면 요청부터 DB 저장/조회까지의 전체 데이터 흐름 구현
-
-* 사용자 신고 작성 → <img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" />
-* 사용자 신고 수정 → <img width="446" height="247" alt="image" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" />
-* 사용자 신고 목록 → <img width="468" height="264" alt="image" src="https://github.com/user-attachments/assets/2496047f-acaf-4344-a7a6-41ed965b3f39" />
-* 사용자 신고 상세보기 → <img width="446" height="264" alt="image" src="https://github.com/user-attachments/assets/cef63121-35c6-40b8-b148-28688b7a4814" />
-* 관리자 신고 목록 → <img width="468" height="250" alt="image" src="https://github.com/user-attachments/assets/22176e39-925a-4c3a-89a8-7837bfcae3ed" />
-* 관리자 신고 상세보기 → <img width="446" height="249" alt="image" src="https://github.com/user-attachments/assets/198a5e92-34ae-45ca-8a02-a8f0f3048681" />
-
----
- 
-### 🚨 신고 기능
-
-* 모집글 신고
-* 후기 신고
-* 신고 내역 관리
-* 관리자 신고 처리
-
----
-
-## 💡 개발 특징
-
-* 신고 시스템을 통한 안전한 커뮤니티 환경 제공
+* 팀 프로젝트로 진행
+* GitHub Flow 기반 협업
+* Notion을 활용한 일정 및 업무 관리
 
 ---
 
@@ -103,15 +82,36 @@
 
 ---
 
-## 👥 Team
+### 🚨 신고 기능
 
-* 팀 프로젝트로 진행
-* GitHub Flow 기반 협업
-* Notion을 활용한 일정 및 업무 관리
+* 모집글 신고
+* 후기 신고
+* 신고 내역 관리
+* 관리자 신고 처리
 
 ---
 
-## 🎥 프로젝트 시연
+## 🔥 주요 기능
+
+* 신고 접수부터 관리자 승인·반려·삭제까지 이어지는 End-to-End 관리 프로세스 구축
+* JSP-MyBatis 기반의 MVC 패턴을 준수하여 화면 요청부터 DB 저장/조회까지의 전체 데이터 흐름 구현
+
+* 사용자 신고 작성 → <img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" />
+* 사용자 신고 수정 → <img width="446" height="247" alt="image" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" />
+* 사용자 신고 목록 → <img width="468" height="264" alt="image" src="https://github.com/user-attachments/assets/2496047f-acaf-4344-a7a6-41ed965b3f39" />
+* 사용자 신고 상세보기 → <img width="446" height="264" alt="image" src="https://github.com/user-attachments/assets/cef63121-35c6-40b8-b148-28688b7a4814" />
+* 관리자 신고 목록 → <img width="468" height="250" alt="image" src="https://github.com/user-attachments/assets/22176e39-925a-4c3a-89a8-7837bfcae3ed" />
+* 관리자 신고 상세보기 → <img width="446" height="249" alt="image" src="https://github.com/user-attachments/assets/198a5e92-34ae-45ca-8a02-a8f0f3048681" />
+
+---
+
+## 💡 트러블슈팅
+
+* 신고 시스템을 통한 안전한 커뮤니티 환경 제공
+
+---
+
+## 🎥 프로젝트 소감 & 시연
 - 신고 등록
 🔗 https://www.youtube.com/watch?v=QSb3lZ5VrFA&feature=youtu.be
 
