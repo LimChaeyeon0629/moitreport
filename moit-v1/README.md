@@ -56,19 +56,19 @@
 <img width="468" height="238" alt="image" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" />
 
 * 사용자 신고 수정
-  <img width="446" height="247" alt="image" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" />
+<img width="446" height="247" alt="image" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" />
 
 * 사용자 신고 목록
-  <img width="468" height="264" alt="image" src="https://github.com/user-attachments/assets/2496047f-acaf-4344-a7a6-41ed965b3f39" />
+<img width="468" height="264" alt="image" src="https://github.com/user-attachments/assets/2496047f-acaf-4344-a7a6-41ed965b3f39" />
 
 * 사용자 신고 상세보기
-  <img width="446" height="264" alt="image" src="https://github.com/user-attachments/assets/cef63121-35c6-40b8-b148-28688b7a4814" />
+<img width="446" height="264" alt="image" src="https://github.com/user-attachments/assets/cef63121-35c6-40b8-b148-28688b7a4814" />
 
 * 관리자 신고 목록
-  <img width="468" height="250" alt="image" src="https://github.com/user-attachments/assets/22176e39-925a-4c3a-89a8-7837bfcae3ed" />
+<img width="468" height="250" alt="image" src="https://github.com/user-attachments/assets/22176e39-925a-4c3a-89a8-7837bfcae3ed" />
 
 * 관리자 신고 상세보기
-  <img width="446" height="249" alt="image" src="https://github.com/user-attachments/assets/198a5e92-34ae-45ca-8a02-a8f0f3048681" />
+<img width="446" height="249" alt="image" src="https://github.com/user-attachments/assets/198a5e92-34ae-45ca-8a02-a8f0f3048681" />
 
 ---
  
