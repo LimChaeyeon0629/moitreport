@@ -39,8 +39,7 @@
 
 ### 🚨 신고 관리 기능
 
-* 중복 신고 방지
-* 본인 작성 글 신고 방지
+* 중복 신고 / 본인 작성 글 신고 방지
 * OpenAI GPT API 기반 신고 사유 문장 생성
 * 관리자 신고 승인 / 반려 / 삭제 상태 변경
 * SMTP 기반 신고 처리 결과 메일 자동 발송
@@ -73,19 +72,15 @@
 1차 프로젝트의 구조를 기반으로 2차 프로젝트에서는 주요 기술 스택과 서비스 구조를 변경하고 기능을 고도화했습니다.
 
 ### Framework
-
 * Spring Framework → **Spring Boot**
 
 ### Database
-
 * MySQL → **Oracle**
 
 ### View
-
 * JSP → **Thymeleaf**
 
 ### Security
-
 * Spring Security 적용
 * OAuth2 기반 소셜 로그인 추가
 * BCrypt 비밀번호 암호화 적용
