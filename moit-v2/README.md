@@ -10,6 +10,17 @@
 
 ---
 
+## ✨ 프로젝트 특징
+
+* Spring Boot 기반 리팩토링을 통한 유지보수성 향상
+* Oracle 및 Thymeleaf 기반 서버 사이드 렌더링 적용
+* OAuth2 및 Spring Security를 활용한 보안 강화
+* OpenAI GPT API를 활용한 AI 추천 및 콘텐츠 생성
+* SMTP 및 비동기 이벤트를 활용한 사용자 알림 자동화
+* Scheduler를 통한 상태 자동 관리
+
+---
+
 ## 📌 프로젝트 개요
 
 | 항목    | 내용                                             |
@@ -99,7 +110,7 @@
 
 ### 2차 고도화
 
-#### 중복 신고 방지
+#### 🚨 중복 신고 방지
 
 동일한 사용자가 같은 게시글을 반복해서 신고하지 못하도록 중복 신고 방지 기능을 구현
 
@@ -107,49 +118,38 @@
 
 <br>
 
-#### 본인 작성 글 신고 방지
+#### 🚨 본인 작성 글 신고 방지
 사용자가 자신이 작성한 모집글이나 후기를 직접 신고하지 못하도록 신고 대상 검증 기능을 구현
 
 <img width="500" alt="본인 작성 글 신고 방지" src="https://github.com/user-attachments/assets/20fc4e76-96e4-456b-b956-a293d7ead320" />
 
 <br>
 
-#### OpenAI GPT API 기반 신고 사유 문장 생성
+#### 🚨 OpenAI GPT API 기반 신고 사유 문장 생성
 사용자가 신고 내용을 작성할 때 입력한 내용을 기반으로 OpenAI GPT API가 신고 사유 문장을 생성할 수 있도록 구현
 
 <img width="500" alt="OpenAI GPT API 신고 사유 문장 생성" src="https://github.com/user-attachments/assets/c2e61e9e-348c-46f6-8421-76fe8a05626b" />
 
 <br>
 
-#### 관리자 신고 상태 변경
+#### 🚨 관리자 신고 상태 변경
 관리자가 신고 상세 내용을 확인한 뒤 승인 / 반려 / 삭제 상태로 변경할 수 있도록 구현
 
 <img width="500" alt="관리자 신고 상태 변경" src="https://github.com/user-attachments/assets/a6252cdf-31d2-4fe8-854b-f941b7894430" />
 
 <br>
 
-#### 신고 처리 결과 메일 자동 발송
+#### 🚨 신고 처리 결과 메일 자동 발송
 관리자가 신고를 처리하면 신고자에게 처리 결과를 안내하는 메일이 자동으로 발송되도록 SMTP 기반 메일 기능을 구현
 
 <img width="500" alt="신고 처리 결과 메일" src="https://github.com/user-attachments/assets/c006981e-421c-4f77-aeb3-4d73f3a3a373" />
 
 <br>
 
-#### 신고 처리 3일 후 만족도 메일 발송
+#### 🚨 신고 처리 3일 후 만족도 메일 발송
 신고 처리 완료 후 3일이 지나면 사용자에게 신고 처리에 대한 만족도를 확인할 수 있는 메일이 자동으로 발송되도록 구현
 
 <img width="500" alt="신고 처리 만족도 메일" src="https://github.com/user-attachments/assets/e3c0411c-93e4-44c6-b201-5a6090f8e2a8" />
-
----
-
-## ✨ 프로젝트 특징
-
-* Spring Boot 기반 리팩토링을 통한 유지보수성 향상
-* Oracle 및 Thymeleaf 기반 서버 사이드 렌더링 적용
-* OAuth2 및 Spring Security를 활용한 보안 강화
-* OpenAI GPT API를 활용한 AI 추천 및 콘텐츠 생성
-* SMTP 및 비동기 이벤트를 활용한 사용자 알림 자동화
-* Scheduler를 통한 상태 자동 관리
 
 ---
 
