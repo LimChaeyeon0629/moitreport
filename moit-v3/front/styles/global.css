@@ -954,20 +954,15 @@ a {
     box-sizing: border-box;
 }
 
-.meetup-sidebar {
+.meetup-category-sticky {
+    position: static;
+
     display: flex;
     flex-direction: column;
     gap: 25px;
-}
-
-.meetup-category-sticky {
-    position: sticky;
-    top: 20px;
-    z-index: 10;
 
     max-height: none;
     overflow: visible;
-    background: #fff;
 }
 
 /* =========================
