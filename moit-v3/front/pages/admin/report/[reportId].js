@@ -246,6 +246,21 @@ function ReportDetailPage() {
             }
         });
     };
+
+    // 접수번호
+    const formatReceiptNumber = (createdAt, reportId) => {
+        if (!createdAt || reportId === undefined || reportId === null) {
+            return "-";
+        }
+
+        const date = String(createdAt)
+            .slice(0, 10)
+            .replaceAll("-", "");
+
+        const number = String(reportId).padStart(4, "0");
+
+        return `RPT-${date}-${number}`;
+    };
     
     // 로딩
     if (adminFetchDetail.loading || !currentReport) {
@@ -254,22 +269,13 @@ function ReportDetailPage() {
         );
     }
 
-    if (!currentReport) {
-        return <div>로딩중...</div>;
-    }
-
     return (
         <div className="report-detail-page">
             <Card>
                 <Title level={2}>관리자 신고 상세보기</Title>
 
                 <Descriptions bordered column={1}>
-                    {/* 신고 번호 */}
-                    <Descriptions.Item label="신고번호">
-                        {currentReport?.reportId}번 신고글
-                    </Descriptions.Item>
-
-                    <Descriptions.Item label="신고 대상 / 매너 점수">
+                    <Descriptions.Item label="신고자 / 매너 점수">
                         {currentReport.memberNickname ?? '-'}{' / '}
                         {currentReport?.trustScore}점{' '}
                         <ReportStatusCodeTag statusCode={currentReport.statusCode} />
@@ -281,14 +287,19 @@ function ReportDetailPage() {
                         <ReportStatusCodeTag statusCode={currentReport.targetStatusCode} />
                     </Descriptions.Item>
 
+                    {/* 신고 번호 */}
+                    <Descriptions.Item label="접수번호">
+                    {formatReceiptNumber(
+                        currentReport.createdAt,
+                        currentReport.reportId
+                    )}
+                    </Descriptions.Item>
+
                     {/* 신고 대상 & 신고 대상 ID */}
-                    <Descriptions.Item label="게시글 번호">
-                        {getTargetTypeText(
-                            currentReport.targetType
-                        )}
-                        ({currentReport.targetType})
-                        {' '}
-                        {currentReport.targetId}번 게시글
+                    <Descriptions.Item label="신고 게시글">
+                        {getTargetTypeText(currentReport.targetType)}
+                        {" · "}
+                        {currentReport.targetTitle || "삭제된 게시글"}
                     </Descriptions.Item>
 
                     {/* 신고 사유 */}

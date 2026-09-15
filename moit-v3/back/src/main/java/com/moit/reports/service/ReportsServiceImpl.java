@@ -133,6 +133,8 @@ public class ReportsServiceImpl implements ReportsService {
 			ReportResponseDto dto = ReportResponseDto.from(report);
 			// 2. 신고 대상 회원 정보 추가
 			setTargetMemberInfo(report, dto);
+			// 3. 신고 대상 글 제목
+			setTargetTitle(report, dto);
 
 			return dto;
 		}).toList();
@@ -155,6 +157,8 @@ public class ReportsServiceImpl implements ReportsService {
 
 		// 신고당한 회원 정보 추가 !!!
 		setTargetMemberInfo(report, responseDto);
+		// 신고당한 게시글 제목
+		setTargetTitle(report, responseDto);
 
 		return responseDto;
 //		return ReportResponseDto.from(report);
@@ -292,6 +296,8 @@ public class ReportsServiceImpl implements ReportsService {
 			ReportResponseDto dto = ReportResponseDto.from(report);
 			// 신고 대상 회원 정보
 			setTargetMemberInfo(report, dto);
+			// 3. 신고 대상 글 제목
+			setTargetTitle(report, dto);
 
 			return dto;
 		}).toList();
@@ -314,8 +320,11 @@ public class ReportsServiceImpl implements ReportsService {
 
 		// 신고당한 회원 정보 추가 !!!
 		setTargetMemberInfo(report, responseDto);
+		
+		// 신고 대상 게시글 제목 추가
+		setTargetTitle(report, responseDto);
 
-		return responseDto;
+	    return responseDto;
 	}
 
 	// 관리자 통계
@@ -450,6 +459,35 @@ public class ReportsServiceImpl implements ReportsService {
 			responseDto.setTargetStatusName(targetMemberInfo.getMemberReportStatus().getStatusName());
 		}
 
+	}
+	
+	// 신고 대상 게시글 제목 찾기
+	private void setTargetTitle(Report report, ReportResponseDto responseDto) {
+
+		if (report.getTargetType() == TargetType.MEETUP) {
+			String targetTitle = meetupRepository.findById(report.getTargetId())
+					.map(Meetup::getTitle)
+					.orElse("삭제된 모임글");
+			responseDto.setTargetTitle(targetTitle);
+			return;
+		}
+
+		if (report.getTargetType() == TargetType.REVIEW) {
+			String targetTitle = reviewRepository.findById(report.getTargetId())
+					.map(review -> {
+				Meetup meetup = review.getMeetup();
+
+				if (meetup == null || meetup.getTitle() == null || meetup.getTitle().isBlank()) {
+					return "모임 후기";
+				}
+				return meetup.getTitle() + " 후기";
+			}).orElse("삭제된 리뷰글");
+
+			responseDto.setTargetTitle(targetTitle);
+			return;
+		}
+
+		responseDto.setTargetTitle("확인할 수 없는 게시글");
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

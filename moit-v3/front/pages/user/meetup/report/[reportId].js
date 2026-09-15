@@ -2,7 +2,7 @@
 // 사용자 신고 상세 조회 페이지
 // 내가 작성한 특정 신고글의 상세 내용을 조회
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import {
@@ -48,7 +48,7 @@ function ReportDetailPage() {
             return;
         }
         dispatch( fetchReportsDetailRequest({reportId: Number(reportId)}) );
-    }, [router.isReady, reportId]);
+    }, [router.isReady, dispatch, reportId]);
     
     // --- 오류 ---
     useEffect(() => {
@@ -147,6 +147,21 @@ function ReportDetailPage() {
             }
         });
     };
+
+    // 접수번호
+    const formatReceiptNumber = (createdAt, reportId) => {
+        if (!createdAt || reportId === undefined || reportId === null) {
+            return "-";
+        }
+
+        const date = String(createdAt)
+            .slice(0, 10)
+            .replaceAll("-", "");
+
+        const number = String(reportId).padStart(4, "0");
+
+        return `RPT-${date}-${number}`;
+    };
     
     // 로딩
     if (fetchDetail.loading || !currentReport) {
@@ -162,43 +177,35 @@ function ReportDetailPage() {
                     신고 상세보기
                 </Title>
 
-                <Descriptions
-                    bordered
-                    column={1}
-                >
-                    {/* 신고 번호 */}
-                    <Descriptions.Item label="신고번호">
-                        {currentReport.reportId}번 신고글
-                    </Descriptions.Item>
-
+                <Descriptions bordered column={1}>
                     {/* <Descriptions.Item label="신고자 / 매너 점수">
                         {currentReport.memberNickname ?? '-'}{' / '}
                         {currentReport.trustScore}점{' '}
                         <ReportStatusCodeTag statusCode={currentReport.statusCode} />
                     </Descriptions.Item> */}
 
-                    <Descriptions.Item label="신고 대상 / 매너 점수">
-                        {currentReport.targetMemberNickname ?? '-'}{' / '}
-                        {currentReport.targetTrustScore}점{' '}
-                        <ReportStatusCodeTag statusCode={currentReport.targetStatusCode} />
+                    <Descriptions.Item label="신고 대상">
+                        {currentReport.targetMemberNickname ?? '-'}
                     </Descriptions.Item>
 
+                    {/* 신고 번호 */}
+                    <Descriptions.Item label="접수번호">
+                    {formatReceiptNumber(
+                        currentReport.createdAt,
+                        currentReport.reportId
+                    )}
+                    </Descriptions.Item>
+                    
                     {/* 신고 대상 & 신고 대상 ID */}
-                    <Descriptions.Item label="게시글 번호">
-                        {getTargetTypeText(
-                            currentReport.targetType
-                        )}
-                        {' '}
-                        ({currentReport.targetType})
-                        {' '}
-                        {currentReport.targetId}번 게시글
+                    <Descriptions.Item label="신고 게시글">
+                        {getTargetTypeText(currentReport.targetType)}
+                        {" · "}
+                        {currentReport.targetTitle || "삭제된 게시글"}
                     </Descriptions.Item>
 
                     {/* 신고 사유 */}
                     <Descriptions.Item label="신고 사유">
-                        {getReasonCodeText(
-                            currentReport.reasonCode
-                        )}
+                        {getReasonCodeText(currentReport.reasonCode)}
                     </Descriptions.Item>
 
                     {/* 신고 상세 내용 */}
