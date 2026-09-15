@@ -216,7 +216,8 @@ public interface MeetupRepository extends JpaRepository<Meetup, Long>{
 		    LEFT JOIN m.meetupLike ml
 		    LEFT JOIN m.meetupImages img
 		    LEFT JOIN img.image image
-		    WHERE m.hidden = false
+		    WHERE m.deleteYn = 'N'
+			  AND m.hidden = false
 		      AND m.meetupStatus = com.moit.meetup.enums.MeetupStatus.RECRUITING
 		    GROUP BY
 		        m.id,
