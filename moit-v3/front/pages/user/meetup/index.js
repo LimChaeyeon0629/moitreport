@@ -211,14 +211,16 @@ function MeetupListPage() {
             사이드바
         ====================== */}
                 <Col xs={24} lg={6}>
-                    <div className="meetup-category-sticky">
-                        <MeetupCategory
-                            categories={categories.filter(
-                                (cate) => cate.parentId === null,
-                            )}
-                            selectedCategoryId={categoryId}
-                            onChange={handleCategoryChange}
-                        />
+                    <div className="meetup-sidebar">
+                        <div className="meetup-category-sticky">
+                            <MeetupCategory
+                                categories={categories.filter(
+                                    (cate) => cate.parentId === null,
+                                )}
+                                selectedCategoryId={categoryId}
+                                onChange={handleCategoryChange}
+                            />
+                        </div>
 
                         <AdBanner position="MEETUP_LIST_SIDEBAR" />
                     </div>
