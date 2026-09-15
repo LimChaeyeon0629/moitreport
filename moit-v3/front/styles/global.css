@@ -956,13 +956,14 @@ a {
 
 .meetup-category-sticky {
     position: static;
+    top: 20px;
 
     display: flex;
     flex-direction: column;
     gap: 25px;
 
-    max-height: none;
-    overflow: visible;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
 }
 
 /* =========================
