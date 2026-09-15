@@ -18,24 +18,12 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 
 제가 담당한 영역은 **사용자 신고 및 관리자 신고 처리 기능**입니다.
 
-### 주요 구현 내용
-
-- 사용자 신고 CRUD
-- 관리자 신고 검색 / 페이징 / 상세 조회
-- 승인 / 반려 / 삭제 처리
-- Redis Lock 기반 중복 처리 방지
-- 신고 승인 시 회원 신뢰도 점수 즉시 반영
-- Audit Log 기반 관리자 처리 이력 저장
-- AFTER_COMMIT + @Async 기반 비동기 이메일 발송
-- 실패 이메일 재전송 처리
-- OpenAI API + RAG 기반 관리자 신고 판단 보조
-
 ## 📈 Report Feature Evolution
 
 | Version | Tech Stack | 신고 기능 고도화 |
 | --- | --- | --- |
 | **v1** | Spring Framework, JSP, MyBatis, MySQL | 사용자 신고 CRUD, 관리자 신고 목록/상세/처리 |
-| **v2** | Spring Boot, Thymeleaf, MyBatis, Oracle, OpenAI API | 중복 신고 방지, 본인 신고 방지, AI 신고 사유 생성, 이메일 발송 |
+| **v2** | Spring Boot, Thymeleaf, MyBatis, Oracle, OpenAI API | 중복 신고 방지, 본인 신고 방지, OpenAI API 신고 사유 생성, 이메일 발송 |
 | **v3** | Spring Boot, React, Next.js, JWT, Redis, JPA, MyBatis, Oracle | Redis Lock, 신뢰도 연계, Audit Log, 비동기 이메일, RAG 기반 관리자 판단 보조 |
 
 ## 📂 Version Details
