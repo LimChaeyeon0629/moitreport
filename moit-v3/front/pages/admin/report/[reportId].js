@@ -263,13 +263,9 @@ function ReportDetailPage() {
             return "-";
         }
 
-        const date = String(createdAt)
-            .slice(0, 10)
-            .replaceAll("-", "");
-
         const number = String(reportId).padStart(4, "0");
 
-        return `RPT-${date}-${number}`;
+        return `REPORT-${number}`;
     };
     
     // 로딩
@@ -291,7 +287,7 @@ function ReportDetailPage() {
                         <ReportStatusCodeTag statusCode={currentReport.statusCode} />
                     </Descriptions.Item>
 
-                    <Descriptions.Item label="신고 대상 회원 / 매너 점수">
+                    <Descriptions.Item label="신고 대상 / 매너 점수">
                         {currentReport.targetMemberNickname ?? '-'}{' / '}
                         {currentReport?.targetTrustScore}점{' '}
                         <ReportStatusCodeTag statusCode={currentReport.targetStatusCode} />
