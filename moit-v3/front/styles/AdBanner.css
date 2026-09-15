@@ -40,7 +40,9 @@
 /* 모집 목록 사이드 */
 .ad-image.ad-MEETUP_LIST_SIDEBAR {
     width: 100%;
-    height: 500px;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
 }
 
 
