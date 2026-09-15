@@ -25,6 +25,8 @@ import {
 import ReportStatusTag from '../../../components/ReportStatusTag';
 import ReportStatusCodeTag from '../../../components/ReportStatusCodeTag';
 
+import api from '../../../api/axios';
+
 const { Title } = Typography;
 
 function ReportDetailPage() {
@@ -160,22 +162,30 @@ function ReportDetailPage() {
 
     //////////////////////////////////////////////////////
     // 해당 신고 대상 글 보기
-    const handleTargetView = () => {
-        // 모임 신고
-        if (currentReport.targetType === 'MEETUP') {
-            router.push(
-                `/user/meetup/detail?meetupId=${currentReport.targetId}`
-            );
-            return;
-        }
+    const handleTargetView = async () => {
+        try {
+            // 모임 신고
+            if (currentReport.targetType === 'MEETUP') {
+                await api.get(`/api/meetups/${currentReport.targetId}`);
+                router.push(`/user/meetup/detail?meetupId=${currentReport.targetId}`);
+                return;
+            }
 
-        // 리뷰 신고
-        if (currentReport.targetType === 'REVIEW') {
+            // 리뷰 신고
+            if (currentReport.targetType === 'REVIEW') {
+                await api.get(`/api/reviews/${currentReport.targetId}`);
+                router.push(`/user/meetup/review/detailreview?reviewId=${currentReport.targetId}&meetupId=${currentReport.meetupId}`);
+                return;
+            }
+            message.warning('신고 대상 정보를 확인할 수 없습니다.');
 
-            router.push(
-                // http://localhost:3000/user/meetup/review/detailreview?reviewId=10&meetupId=3
-                `/user/meetup/review/detailreview?reviewId=${currentReport.targetId}&meetupId=${currentReport.meetupId}`
-            );
+        } catch (error) {
+            const status = error.response?.status;
+            if (status === 400 || status === 404) {
+                message.warning('삭제된 게시글입니다.');
+                return;
+            }
+            message.error('게시글을 불러오지 못했습니다.');
         }
     };
 
