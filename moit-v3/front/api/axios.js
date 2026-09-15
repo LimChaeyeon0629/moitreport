@@ -55,8 +55,10 @@ api.interceptors.request.use(
       const isLoginRequest =
         config.url === "/api/members/login";
 
+      // 관리자 가입 공개 요청으로 처리
       const isSignupRequest =
-        config.url === "/api/members/signup";
+        config.url === "/api/members/signup" ||
+        config.url === "/api/admin/members/signup";
 
       // Refresh 요청에도 기존 Access Token을 굳이 붙이지 않음
       const isRefreshRequest =

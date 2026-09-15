@@ -78,10 +78,15 @@ function getMyPageApi() {
 }
 
 // =========================
-// 회원가입 API
+// 회원가입 API ## 관리자 가입 API 분기
 // =========================
-function signupApi(signupData){
-    return api.post("/api/members/signup",signupData);
+function signupApi(signupData) {
+    const signupUrl =
+        Number(signupData.memberTypeId) === 3
+            ? "/api/admin/members/signup"
+            : "/api/members/signup";
+
+    return api.post(signupUrl, signupData);
 }
 
 // =========================
