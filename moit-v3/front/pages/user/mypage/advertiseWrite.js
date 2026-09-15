@@ -190,7 +190,7 @@ function AdvertiseWritePage() {
       message.loading({ content: '🤖 AI가 광고 내용을 작성 중입니다...', key: 'aiLoad', duration: 0 });
 
       // 2차 소스에서 쓰던 백엔드 API 엔드포인트 연동
-      const response = await axios.post('/user/advertisement/aiAdvertise', {
+      const response = await axios.post('/api/advertisement/aiAdvertise', {
         keyword: aiKeyword,
       });
       const data = response.data;

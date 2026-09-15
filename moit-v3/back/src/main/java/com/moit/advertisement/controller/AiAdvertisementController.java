@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user/advertisement")
+@RequestMapping("/api/advertisement")
 public class AiAdvertisementController {
 
 
