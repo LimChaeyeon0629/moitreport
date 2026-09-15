@@ -85,7 +85,6 @@ public class MeetupDto {
 			response.setId(meetup.getId());
 			response.setTitle(meetup.getTitle());
 			response.setNickname(meetup.getMember().getNickname());
-			response.setProfileUrl(meetup.getMember().getProfileUrl());	// lcy 추가
 			
 		    response.setMaxParticipants(meetup.getMaxParticipants());
 		    response.setMinParticipants(meetup.getMinParticipants());
@@ -143,6 +142,7 @@ public class MeetupDto {
 		    
 		    response.setMemberId(meetup.getMember().getId());
 		    response.setNickname(meetup.getMember().getNickname());
+		    response.setProfileUrl(meetup.getMember().getProfileUrl());
 		    response.setSigunguId(meetup.getSigungu().getId());
 		    response.setSigunguName(meetup.getSigungu().getName());
 		    response.setCategoryId(meetup.getMeetupCategory().getId());
