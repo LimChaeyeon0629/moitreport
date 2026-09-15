@@ -57,6 +57,7 @@ public class MeetupDto {
 		private ApplyStatus applyStatus;
 		
 		private String nickname;
+		private String profileUrl;	// lcy 추가
 		
 		private Long sigunguId;
 		private String sigunguName;
@@ -84,6 +85,7 @@ public class MeetupDto {
 			response.setId(meetup.getId());
 			response.setTitle(meetup.getTitle());
 			response.setNickname(meetup.getMember().getNickname());
+			response.setProfileUrl(meetup.getMember().getProfileUrl());	// lcy 추가
 			
 		    response.setMaxParticipants(meetup.getMaxParticipants());
 		    response.setMinParticipants(meetup.getMinParticipants());
