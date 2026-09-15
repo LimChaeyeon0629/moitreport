@@ -16,11 +16,6 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 
 - **Service URL**: https://moitreport.duckdns.org/
 - **Repository**: https://github.com/LimChaeyeon0629/moitreport
-- **Deployment**: AWS EC2 / Nginx / PM2 / Docker
-- **Backend**: Spring Boot
-- **Frontend**: Next.js
-- **Database**: Oracle
-- **Cache / Lock**: Redis
 
 ## 🧪 신고 기능 테스트 가이드
 
