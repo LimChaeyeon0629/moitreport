@@ -409,11 +409,7 @@ function AdminReportPage() {
       )
     },
 
-    {
-      title: '글 번호',
-      dataIndex: 'targetId',
-      key: 'targetId'
-    },
+
 
     {
       title: '신고 사유',
