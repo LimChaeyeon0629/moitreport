@@ -1823,9 +1823,9 @@ a {
 .report-edit-card,
 .user-report-detail-page .report-detail-card {
     width: 100%;
-    border: 2px solid #4a7dff !important;
+    border: 1px solid #eeeeee !important;
     border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(74, 125, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* 카드 내부 */
