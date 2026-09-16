@@ -177,7 +177,7 @@ function ReportDetailPage() {
     }
 
     return (
-        <div className="report-detail-page">
+        <div className="user-report-detail-page">
             <Card className="report-detail-card">
                 <Title level={2}>
                     신고 상세보기

@@ -1809,9 +1809,13 @@ a {
    사용자 / 관리자 신고 상세 공통
 ========================= */
 
-.report-detail-page {
-    width: 100%;
-    box-sizing: border-box;
+@media (max-width: 575px) {
+    .report-write-page,
+    .user-report-detail-page,
+    .report-edit-page {
+        max-width: 100%;
+        padding: 12px;
+    }
 }
 
 .report-detail-card {
