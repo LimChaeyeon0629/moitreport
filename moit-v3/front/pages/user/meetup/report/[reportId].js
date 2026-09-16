@@ -195,7 +195,7 @@ function ReportDetailPage() {
                     </Descriptions.Item>
 
                     {/* 신고 번호 */}
-                    <Descriptions.Item label="접수번호">
+                    <Descriptions.Item label="접수 번호">
                     {formatReceiptNumber(
                         currentReport.createdAt,
                         currentReport.reportId

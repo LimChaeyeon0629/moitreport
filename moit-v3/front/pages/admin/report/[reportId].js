@@ -281,20 +281,20 @@ function ReportDetailPage() {
                 <Title level={2}>관리자 신고 상세보기</Title>
 
                 <Descriptions bordered column={1}>
-                    <Descriptions.Item label="신고자 / 매너 점수">
+                    <Descriptions.Item label="신고자">
                         {currentReport.memberNickname ?? '-'}{' / '}
                         {currentReport?.trustScore}점{' '}
                         <ReportStatusCodeTag statusCode={currentReport.statusCode} />
                     </Descriptions.Item>
 
-                    <Descriptions.Item label="신고 대상 / 매너 점수">
+                    <Descriptions.Item label="신고 대상">
                         {currentReport.targetMemberNickname ?? '-'}{' / '}
                         {currentReport?.targetTrustScore}점{' '}
                         <ReportStatusCodeTag statusCode={currentReport.targetStatusCode} />
                     </Descriptions.Item>
 
                     {/* 신고 번호 */}
-                    <Descriptions.Item label="접수번호">
+                    <Descriptions.Item label="접수 번호">
                     {formatReceiptNumber(
                         currentReport.createdAt,
                         currentReport.reportId

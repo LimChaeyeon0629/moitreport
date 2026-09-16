@@ -15,6 +15,7 @@ import {
 import ReportStatusTag from '../../../components/ReportStatusTag';
 import ReportStatusCodeTag from '../../../components/ReportStatusCodeTag';
 
+
 const { Title } = Typography;
 
 
@@ -174,12 +175,7 @@ function UserMyReportPage() {
                 getTargetTypeText(targetType)
         },
 
-        {
-            title: '글 번호',
-            dataIndex: 'targetId',
-            key: 'targetId',
-            align: 'center'
-        },
+        
 
         {
             title: '신고 사유',
