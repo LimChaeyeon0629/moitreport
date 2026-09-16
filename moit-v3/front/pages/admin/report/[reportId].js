@@ -277,10 +277,14 @@ function ReportDetailPage() {
 
     return (
         <div className="report-detail-page">
-            <Card>
+            <Card className="report-detail-card">
                 <Title level={2}>관리자 신고 상세보기</Title>
 
-                <Descriptions bordered column={1}>
+                <Descriptions
+                    bordered
+                    column={1}
+                    className="report-detail-descriptions"
+                >
                     <Descriptions.Item label="신고자">
                         {currentReport.memberNickname ?? '-'}{' / '}
                         {currentReport?.trustScore}점{' '}
@@ -318,11 +322,13 @@ function ReportDetailPage() {
 
                     {/* 신고 상세 내용 */}
                     <Descriptions.Item label="상세 내용">
-                        {
-                            currentReport.reasonDetail
-                                ? currentReport.reasonDetail
-                                : '작성된 상세 내용이 없습니다.'
-                        }
+                        <div className="report-detail-description-text">
+                            {
+                                currentReport.reasonDetail
+                                    ? currentReport.reasonDetail
+                                    : '작성된 상세 내용이 없습니다.'
+                            }
+                        </div>
                     </Descriptions.Item>
 
                     {/* 신고 처리 상태 */}
@@ -424,7 +430,7 @@ function ReportDetailPage() {
                 )}
 
 
-                <Space style={{marginTop:20}}>
+                <Space className="report-detail-actions">
                     {/* 신고 목록 */}
                     <Button onClick={() => router.push('/admin/report')}>
                         목록

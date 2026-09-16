@@ -1803,3 +1803,60 @@ a {
         height: 250px;
     }
 }
+
+/* =========================
+   Report Detail Common
+   사용자 / 관리자 신고 상세 공통
+========================= */
+
+.report-detail-page {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.report-detail-card {
+    width: 100%;
+}
+
+/* 신고 상세 테이블 */
+.report-detail-descriptions {
+    width: 100%;
+}
+
+/* 왼쪽 라벨 칸 */
+.report-detail-descriptions .ant-descriptions-item-label {
+    width: 170px;
+    min-width: 170px;
+
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+
+    padding: 14px 18px !important;
+    vertical-align: middle;
+}
+
+/* 오른쪽 내용 칸 */
+.report-detail-descriptions .ant-descriptions-item-content {
+    padding: 14px 18px !important;
+
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+
+    line-height: 1.6;
+    vertical-align: middle;
+}
+
+/* 상세 내용 긴 문장 */
+.report-detail-description-text {
+    white-space: pre-wrap;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+}
+
+/* 버튼 */
+.report-detail-actions {
+    margin-top: 20px;
+}
