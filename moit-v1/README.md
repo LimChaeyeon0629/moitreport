@@ -84,7 +84,8 @@
 또한 JSP와 MyBatis를 활용한 MVC 구조로 화면 요청부터 DB 저장·조회까지 이어지는 전체 데이터 흐름을 구현했습니다.
 
 ### 👤 사용자 신고 관리
-
+| | |
+| --- | --- | 
 | 🚨 신고 작성 | 🚨 신고 수정 |
 | 사용자가 모집글 및 후기를 대상으로 신고 사유와 상세 내용을 입력해 신고할 수 있도록 구현 | 사용자가 작성한 신고 내용을 확인하고 신고 사유 및 상세 내용을 수정할 수 있도록 구현 |
 | <img width="500" alt="사용자 신고 작성" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" /> | <img width="500" alt="사용자 신고 수정" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" /> |
