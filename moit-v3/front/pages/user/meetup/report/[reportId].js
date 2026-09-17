@@ -195,7 +195,9 @@ function ReportDetailPage() {
                     </Descriptions.Item> */}
 
                     <Descriptions.Item label="신고 대상">
-                        {currentReport.targetMemberNickname ?? '-'}
+                        {currentReport.targetMemberNickname ?? '-'}{' / '}
+                        {currentReport?.targetTrustScore}점{' '}
+                        <ReportStatusCodeTag statusCode={currentReport.targetStatusCode} />
                     </Descriptions.Item>
 
                     {/* 신고 번호 */}

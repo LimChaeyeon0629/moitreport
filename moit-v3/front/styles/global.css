@@ -1939,3 +1939,18 @@ a {
         padding: 12px !important;
     }
 }
+
+/* 관리자 신고 상세 라벨 줄바꿈 방지 */
+.report-detail-page
+.report-detail-descriptions
+.ant-descriptions-item-label {
+    width: 150px;
+    min-width: 150px;
+
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+
+    padding: 14px 18px !important;
+    vertical-align: middle;
+}

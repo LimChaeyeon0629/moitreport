@@ -166,7 +166,7 @@ function UserMyReportPage() {
         },
 
         {
-            title: '신고 대상 유형',
+            title: '신고 유형',
             dataIndex: 'targetType',
             key: 'targetType',
             align: 'center',
@@ -209,7 +209,7 @@ function UserMyReportPage() {
         },
 
         {
-            title: '관리',
+            title: '상세',
             key: 'detail',
             align: 'center',
 

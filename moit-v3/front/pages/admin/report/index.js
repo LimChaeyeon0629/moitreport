@@ -400,7 +400,7 @@ function AdminReportPage() {
     },
 
     {
-      title: '타입',
+      title: '신고 유형',
       dataIndex: 'targetType',
       key: 'targetType',
 
