@@ -44,6 +44,7 @@
 | 개발 형태 | 팀 프로젝트                  |
 | 담당 기능 | 사용자 및 관리자 신고 관리         |
 | 개발 목표 | 목적 기반 소모임 커뮤니티 플랫폼 구축   |
+| PPT |  [MOIT 1차 결과보고서.pdf](https://github.com/user-attachments/files/32323162/MOIT.1.pdf)   |
 
 ---
 
