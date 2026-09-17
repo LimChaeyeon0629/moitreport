@@ -106,8 +106,9 @@
 
 ### 2차 고도화
 
-| 🚨 중복 신고 방지 | 🚨 본인 작성 글 신고 방지 |
+| | |
 | --- | --- |
+| 🚨 중복 신고 방지 | 🚨 본인 작성 글 신고 방지 |
 | 동일한 사용자가 같은 게시글을 반복해서 신고하지 못하도록 중복 신고 방지 기능을 구현 | 사용자가 자신이 작성한 모집글이나 후기를 직접 신고하지 못하도록 신고 대상 검증 기능을 구현 |
 | <img width="500" alt="중복 신고 방지" src="https://github.com/user-attachments/assets/90045ded-1937-4b4d-858e-5153eb467b1b" /> | <img width="500" alt="본인 작성 글 신고 방지" src="https://github.com/user-attachments/assets/20fc4e76-96e4-456b-b956-a293d7ead320" /> |
 | 🚨 OpenAI GPT API 기반 신고 사유 문장 생성 | 🚨 관리자 신고 처리 |
