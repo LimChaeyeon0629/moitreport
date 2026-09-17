@@ -116,8 +116,9 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 **성과**
 * 동시 요청 상황에서도 신고 상태와 회원 신뢰도 데이터의 정합성을 유지할 수 있도록 개선
 
-| 🚨 동시 처리 차단 | 🚨 Redis Lock 생성 및 TTL 적용 |
+| | |
 | --- | --- |
+| 🚨 동시 처리 차단 | 🚨 Redis Lock 생성 및 TTL 적용 |
 | 두 번째 신고 처리 요청이 중복 수행되지 않도록 차단 | 신고 ID를 기준으로 `lock:report:*` 형태의 Lock을 생성하고 TTL 10초 적용<br>Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는지 검증 |
 | <img width="500" alt="동시 처리 차단" src="https://github.com/user-attachments/assets/a690f4ca-5772-464f-9a86-ce0593fc2180" /> | <img width="500" alt="Redis Lock 생성" src="https://github.com/user-attachments/assets/f5a03730-7a52-4456-b4a0-a1d6b8979b25" /><br><br><img width="500" alt="Redis Lock TTL 확인" src="https://github.com/user-attachments/assets/8933efa6-1f33-4ba1-a664-be78c634e38a" /> |
 
@@ -132,8 +133,9 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 **성과**
 * 외부 이메일 서비스의 지연이나 실패가 신고 처리 트랜잭션에 미치는 영향 최소화
 
-| 🚨 AFTER_COMMIT + @Async 실행 | 🚨 실패 이메일 재전송 |
+| | |
 | --- | --- |
+| 🚨 AFTER_COMMIT + @Async 실행 | 🚨 실패 이메일 재전송 |
 | 신고 처리 트랜잭션이 커밋된 후 비동기 이메일 이벤트가 실행되는 것을 로그를 통해 확인 | 실패한 이메일 발송 건을 일정 주기로 다시 처리할 수 있도록 1분 주기의 스케줄러를 구성 |
 | <img width="500" alt="AFTER_COMMIT 비동기 이메일 실행" src="https://github.com/user-attachments/assets/89159351-481f-467c-9e68-b07c66908180" /> | <img width="500" alt="실패 이메일 재전송" src="https://github.com/user-attachments/assets/d6011cd5-7609-422a-959f-b2cbe1c6727b" /> |
 
@@ -148,8 +150,9 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 **성과**
 * 관리자가 신고 내용만 보는 것이 아니라 운영 정책과 기존 처리 사례를 함께 참고할 수 있는 신고 판단 보조 기능 구현
 
-| 🚨 AI 신고 판단 결과 | 🚨 정책·유사 사례 검색 및 GPT 분석 |
+| | |
 | --- | --- |
+| 🚨 AI 신고 판단 결과 | 🚨 정책·유사 사례 검색 및 GPT 분석 |
 | 관리자 신고 상세 화면에서 AI 분석 결과와 판단 근거를 확인할 수 있도록 구현 | 신고 내용과 관련성이 높은 정책 및 사례를 검색하고 해당 내용을 GPT Context에 포함하여 분석하도록 구현 |
 | <img width="500" alt="AI 신고 판단 결과" src="https://github.com/user-attachments/assets/65c3c0ca-c7f2-4735-97d6-5cec18297f9b" /> | <img width="500" alt="정책 유사 사례 검색 및 GPT 분석" src="https://github.com/user-attachments/assets/70f6638f-f443-42f5-afd9-9542bfc14c5f" /> |
 
@@ -165,8 +168,9 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 **성과**
 * 관리자 처리 과정의 추적성을 확보하고 불필요한 장기 데이터 누적을 방지하여 운영 데이터 관리 효율성 향상
 
-| 🚨 관리자 처리 이력 | 🚨 3년 경과 Audit Log 자동 정리 |
+| | |
 | --- | --- |
+| 🚨 관리자 처리 이력 | 🚨 3년 경과 Audit Log 자동 정리 |
 | 관리자의 신고 처리 상태, 처리 사유 및 신뢰도 변화를 Audit Log로 확인할 수 있도록 구현 | 처리일 기준 3년이 지난 Audit Log를 자동으로 정리하도록 스케줄러 구성 |
 | <img width="500" alt="관리자 처리 이력" src="https://github.com/user-attachments/assets/5149a4a9-26cc-4e32-b062-49fa089fea49" /> | <img width="500" alt="Audit Log 자동 정리" src="https://github.com/user-attachments/assets/97b05532-b897-4d0d-99f7-0154f0194f66" /> |
 
