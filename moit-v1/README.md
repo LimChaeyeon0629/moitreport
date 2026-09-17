@@ -89,16 +89,10 @@
 | --- | --- |
 | 사용자가 모집글 및 후기를 대상으로 신고 사유와 상세 내용을 입력해 신고할 수 있도록 구현 | 사용자가 작성한 신고 내용을 확인하고 신고 사유 및 상세 내용을 수정할 수 있도록 구현 |
 | <img width="500" alt="사용자 신고 작성" src="https://github.com/user-attachments/assets/1cad0320-a3da-4b37-a7f8-3119886989e7" /> | <img width="500" alt="사용자 신고 수정" src="https://github.com/user-attachments/assets/a16c039e-e9fd-41da-a8a2-9dade117ee8a" /> |
-
-| --- | --- |
-
 | 🚨 신고 목록 조회 | 🚨 신고 상세 조회 |
 | --- | --- |
 | 사용자가 자신이 작성한 신고 내역과 처리 상태를 확인할 수 있도록 구현 | 신고 사유, 상세 내용, 작성 및 수정 정보 등을 확인할 수 있도록 상세 조회 기능을 구현 |
 | <img width="500" alt="사용자 신고 목록" src="https://github.com/user-attachments/assets/2496047f-acaf-4344-a7a6-41ed965b3f39" /> | <img width="500" alt="사용자 신고 상세보기" src="https://github.com/user-attachments/assets/cef63121-35c6-40b8-b148-28688b7a4814" /> |
-
-| --- | --- |
-
 | 🚨 관리자 신고 목록 | 🚨 관리자 신고 상세 및 처리 |
 | --- | --- |
 | 관리자가 접수된 신고 내역을 확인하고 처리 대상 신고를 조회할 수 있도록 구현 | 신고 상세 내용을 확인한 뒤 승인·반려·삭제 등 필요한 처리를 수행할 수 있도록 구현 |
