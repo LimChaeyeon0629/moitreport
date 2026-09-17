@@ -1,4 +1,4 @@
-# 🚀 MOIT (모잇)
+[MOIT 3차 결과보고서.pdf](https://github.com/user-attachments/files/32321830/MOIT.3.pdf)# 🚀 MOIT (모잇)
 
 ### 📢 MOIT = **Meet + It = MOIT**
 
@@ -21,7 +21,9 @@
 | 개발 형태  | 팀 프로젝트                                                                                        |
 | 담당 기능  | 사용자 신고 및 관리자 신고 처리 기능                                                                         |
 | 개발 목표  | 신고 관리 체계 고도화 및 AI/RAG 기반 관리자 판단 보조 기능 구축                                                      |
+| PPT  | [Uploading MOIT 3차 결과보고서.pdf…]()                                     |
 | 배포 주소  | [moitreport.duckdns.org](https://moitreport.duckdns.org/)                                     |
+
 
 ---
 
