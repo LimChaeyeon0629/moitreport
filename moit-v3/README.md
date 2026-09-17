@@ -120,7 +120,7 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 
 | 🚨 동시 처리 차단 | 🚨 Redis Lock 생성 및 TTL 적용 |
 | --- | --- |
-| 두 번째 신고 처리 요청이 중복 수행되지 않도록 차단 | 신고 ID를 기준으로 `lock:report:*` 형태의 Lock을 생성하고 TTL 10초 적용<br>Redis에서 `LOCKED` 상태를 확인하여 Lock이 정상적으로 생성되는지 검증 |
+| 두 번째 신고 처리 요청이 중복 수행되지 않도록 차단 | 신고 ID 기준으로 `lock:report:*` 형태의 Lock을 생성하고 TTL 10초 적용<br>Redis에서 `LOCKED` 상태 확인 후 Lock이 정상적으로 생성되는지 검증 |
 | <img width="500" alt="동시 처리 차단" src="https://github.com/user-attachments/assets/a690f4ca-5772-464f-9a86-ce0593fc2180" /> | <img width="500" alt="Redis Lock 생성" src="https://github.com/user-attachments/assets/f5a03730-7a52-4456-b4a0-a1d6b8979b25" /><br><br><img width="500" alt="Redis Lock TTL 확인" src="https://github.com/user-attachments/assets/8933efa6-1f33-4ba1-a664-be78c634e38a" /> |
 
 <br>
