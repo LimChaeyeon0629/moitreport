@@ -110,8 +110,8 @@
 | --- | --- |
 | 동일한 사용자가 같은 게시글을 반복해서 신고하지 못하도록 중복 신고 방지 기능을 구현 | 사용자가 자신이 작성한 모집글이나 후기를 직접 신고하지 못하도록 신고 대상 검증 기능을 구현 |
 | <img width="500" alt="중복 신고 방지" src="https://github.com/user-attachments/assets/90045ded-1937-4b4d-858e-5153eb467b1b" /> | <img width="500" alt="본인 작성 글 신고 방지" src="https://github.com/user-attachments/assets/20fc4e76-96e4-456b-b956-a293d7ead320" /> |
-| 🚨 OpenAI GPT API 기반 신고 사유 문장 생성 | 🚨 관리자 신고 상태 변경 |
-| 사용자가 신고 내용을 작성할 때 입력한 내용을 기반으로 OpenAI GPT API가 신고 사유 문장을 생성할 수 있도록 구현 | 관리자가 신고 상세 내용을 확인한 뒤 승인 / 반려 / 삭제 상태로 변경할 수 있도록 구현 |
+| 🚨 OpenAI GPT API 기반 신고 사유 문장 생성 | 🚨 관리자 신고 처리 |
+| 사용자가 신고 내용을 작성할 때 입력한 내용을 기반으로 OpenAI GPT API가 신고 사유 문장을 생성할 수 있도록 구현 | 관리자가 신고 상세 내용을 확인한 뒤 승인·반려 상태로 변경하거나 신고를 삭제할 수 있도록 구현 |
 | <img width="500" alt="OpenAI GPT API 신고 사유 문장 생성" src="https://github.com/user-attachments/assets/c2e61e9e-348c-46f6-8421-76fe8a05626b" /> | <img width="500" alt="관리자 신고 상태 변경" src="https://github.com/user-attachments/assets/a6252cdf-31d2-4fe8-854b-f941b7894430" /> |
 | 🚨 신고 처리 결과 메일 자동 발송 | 🚨 신고 처리 3일 후 만족도 메일 발송 |
 | 관리자가 신고를 처리하면 신고자에게 처리 결과를 안내하는 메일이 자동으로 발송되도록 SMTP 기반 메일 기능을 구현 | 신고 처리 완료 후 3일이 지나면 사용자에게 신고 처리에 대한 만족도를 확인할 수 있는 메일이 자동으로 발송되도록 구현 |
