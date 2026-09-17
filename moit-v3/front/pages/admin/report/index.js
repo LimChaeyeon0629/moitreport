@@ -122,7 +122,6 @@ function AdminReportPage() {
 
                 ticks: {
                   precision: 0,
-                  stepSize: 1,
                 },
 
                 title: {

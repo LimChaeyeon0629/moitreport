@@ -1954,3 +1954,230 @@ a {
     padding: 14px 18px !important;
     vertical-align: middle;
 }
+
+/* =========================================
+   ADMIN REPORT DETAIL
+========================================= */
+
+.report-detail-page {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   A / B+C 2열 레이아웃
+========================================= */
+
+.admin-report-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(360px, 2fr);
+    gap: 20px;
+    align-items: start;
+}
+
+
+/* =========================================
+   공통 카드
+========================================= */
+
+.admin-report-detail-main,
+.admin-report-ai-card,
+.admin-report-process-card,
+.admin-report-history-card {
+    border: 1px solid #eeeeee !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================================
+   A. 관리자 신고 상세
+========================================= */
+
+.admin-report-detail-main .ant-card-body {
+    padding: 24px;
+}
+
+.admin-report-detail-title {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+
+/* 기존 관리자 상세 label 줄바꿈 방지 */
+.report-detail-page
+.report-detail-descriptions
+.ant-descriptions-item-label {
+    width: 140px;
+    min-width: 140px;
+    white-space: nowrap;
+}
+
+.report-detail-page
+.report-detail-descriptions
+.ant-descriptions-item-content {
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   오른쪽 영역
+========================================= */
+
+.admin-report-detail-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* =========================================
+   섹션 제목 공통
+========================================= */
+
+.admin-report-section-title {
+    margin-top: 0 !important;
+    margin-bottom: 18px !important;
+}
+
+
+/* =========================================
+   B. AI 판단 보조
+========================================= */
+
+.admin-report-ai-card .ant-card-body {
+    padding: 22px;
+}
+
+.admin-report-ai-description {
+    margin: 0;
+    line-height: 1.6;
+    color: #444;
+}
+
+.admin-report-ai-notice {
+    color: #888;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.admin-report-ai-result {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.admin-report-ai-result-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   C. 신고 처리
+========================================= */
+
+.admin-report-process-card .ant-card-body {
+    padding: 22px;
+}
+
+.admin-report-process-title {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.admin-report-process-reason .ant-input {
+    border-radius: 8px;
+}
+
+.admin-report-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.admin-report-actions-left,
+.admin-report-actions-right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+
+/* =========================================
+   D. 관리자 처리 이력
+========================================= */
+
+.admin-report-history-card {
+    margin-top: 20px;
+}
+
+.admin-report-history-card .ant-card-body {
+    padding: 24px;
+}
+
+.admin-report-history-item {
+    margin-bottom: 12px;
+}
+
+.admin-report-history-item:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .admin-report-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 575px) {
+
+    .admin-report-detail-main .ant-card-body,
+    .admin-report-ai-card .ant-card-body,
+    .admin-report-process-card .ant-card-body,
+    .admin-report-history-card .ant-card-body {
+        padding: 18px;
+    }
+
+    .report-detail-page
+    .report-detail-descriptions
+    .ant-descriptions-item-label {
+        width: 105px;
+        min-width: 105px;
+    }
+
+    .admin-report-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-report-actions-left,
+    .admin-report-actions-right {
+        width: 100%;
+    }
+
+    .admin-report-actions-left .ant-btn,
+    .admin-report-actions-right .ant-btn {
+        flex: 1;
+    }
+}
