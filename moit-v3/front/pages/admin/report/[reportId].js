@@ -1,287 +1,567 @@
-return (
-    <div className="report-detail-page">
+// pages/admin/report/[reportId].js
+// 관리자 신고 상세 페이지
+// 신고 상세 조회 + 승인/반려 + 삭제
 
-        <div className="admin-report-detail-grid">
+import { useEffect, useState } from 'react';
+// Redux에 액션 전송, Redux에 저장된 값을 꺼내오기
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
-            {/* ======================================
-                A. 관리자 신고 상세보기
-            ====================================== */}
-            <Card className="admin-report-detail-main">
-                <Title level={2} className="admin-report-detail-title">
-                    관리자 신고 상세보기
-                </Title>
+import {
+    fetchAdminReportsDetailRequest,
+    updateAdminReportRequest,
+    deleteAdminReportRequest,
+    fetchAdminReportAuditLogsRequest,
+    aiReportAnalysisRequest,
+    resetReportState,
+    resetAdminUpdateError
+} from '../../../reducers/reportReducer';
 
-                <Descriptions
-                    bordered
-                    column={1}
-                    className="report-detail-descriptions"
-                >
-                    <Descriptions.Item label="신고자">
-                        {currentReport.memberNickname ?? '-'}{' / '}
-                        {currentReport?.trustScore}점{' '}
-                        <ReportStatusCodeTag
-                            statusCode={currentReport.statusCode}
-                        />
-                    </Descriptions.Item>
+import {
+    Card, Input, Button, Typography, Space, Alert,
+    message, Descriptions, Modal, Spin
+} from 'antd';
 
-                    <Descriptions.Item label="신고 대상">
-                        {currentReport.targetMemberNickname ?? '-'}{' / '}
-                        {currentReport?.targetTrustScore}점{' '}
-                        <ReportStatusCodeTag
-                            statusCode={currentReport.targetStatusCode}
-                        />
-                    </Descriptions.Item>
+import ReportStatusTag from '../../../components/ReportStatusTag';
+import ReportStatusCodeTag from '../../../components/ReportStatusCodeTag';
 
-                    <Descriptions.Item label="접수 번호">
-                        {formatReceiptNumber(
-                            currentReport.createdAt,
-                            currentReport.reportId
-                        )}
-                    </Descriptions.Item>
+import api from '../../../api/axios';
 
-                    <Descriptions.Item label="신고 게시글">
-                        {getTargetTypeText(currentReport.targetType)}
-                        {' · '}
-                        {currentReport.targetTitle || '삭제된 게시글'}
-                    </Descriptions.Item>
+const { Title } = Typography;
 
-                    <Descriptions.Item label="신고 사유">
-                        {getReasonCodeText(currentReport.reasonCode)}
-                        ({currentReport.reasonCode})
-                    </Descriptions.Item>
+function ReportDetailPage() {
+    const router = useRouter();
+    const dispatch = useDispatch();
 
-                    <Descriptions.Item label="상세 내용">
-                        <div className="report-detail-description-text">
-                            {currentReport.reasonDetail
-                                ? currentReport.reasonDetail
-                                : '작성된 상세 내용이 없습니다.'}
-                        </div>
-                    </Descriptions.Item>
+    const [processReason, setProcessReason] = useState('');
 
-                    <Descriptions.Item label="처리 상태">
-                        <ReportStatusTag status={currentReport.status} />
-                    </Descriptions.Item>
+    
+    const { reportId } = router.query; // 동적라우팅
+    
+    const {
+        currentReport,
+        adminFetchDetail,
+        adminUpdate,
+        adminDelete,
+        
+        auditLogs,
+        auditLogFetch,
+        
+        aiAnalysis,         // reportId별 전체 AI 결과 객체
+        aiAnalysisLoading,
+        aiAnalysisError,
 
-                    <Descriptions.Item label="신고일">
-                        {currentReport.createdAt
-                            ?.replace('T', ' ')
-                            .slice(0, 19)}
-                    </Descriptions.Item>
-
-                    {currentReport.userUpdatedAt && (
-                        <Descriptions.Item label="수정일자">
-                            {currentReport.userUpdatedAt
-                                ?.replace('T', ' ')
-                                .slice(0, 19)}
-                        </Descriptions.Item>
-                    )}
-                </Descriptions>
-            </Card>
+    } = useSelector((state) => state.report);
+    
+    // 현재 reportId에 해당하는 AI 분석 결과만 가져오기
+    const currentAiAnalysis = aiAnalysis?.[reportId];
 
 
-            {/* ======================================
-                오른쪽 B + C
-            ====================================== */}
-            <div className="admin-report-detail-side">
 
-                {/* B. AI 판단 보조 */}
-                <Card className="admin-report-ai-card">
-                    <Title level={4} className="admin-report-section-title">
-                        AI 판단 보조
+
+    // --- 신고 상세 조회 ---
+    useEffect(() => {
+        if (!router.isReady) {
+            return;
+        }
+        dispatch( fetchAdminReportsDetailRequest({reportId: Number(reportId)}) );
+        dispatch( fetchAdminReportAuditLogsRequest({reportId: Number(reportId)}) );
+    }, [router.isReady, dispatch, reportId]);
+    
+    // --- 신고 처리 후 재조회 ---
+    useEffect(() => {
+        if (adminUpdate.success) {
+            message.success('신고 처리가 완료되었습니다.');
+
+            // ServiceImpl updateAdminReport
+            // 반환형 return responseDto (ReportResponseDto)
+            // 승인 처리 / 신뢰도 변경 포함
+            // 관리자 처리 감사 로그 재조회
+            dispatch(
+                fetchAdminReportAuditLogsRequest({
+                    reportId: Number(reportId),
+                })
+            );
+
+            dispatch(resetReportState());
+        }
+    }, [adminUpdate.success, dispatch, reportId]);
+
+    // --- 동시 신고 처리중 ---
+    useEffect(() => {
+        if (adminUpdate.error) {
+            Modal.error({
+                title: "신고 처리 실패",
+                content: adminUpdate.error,
+                onOk: () => { dispatch(resetAdminUpdateError()); },
+            });
+        }
+    }, [adminUpdate.error, dispatch]);
+
+    // --- 신고 삭제 성공 ---
+    useEffect(() => {
+        if (adminDelete.success) {
+            message.success('신고 내역이 삭제되었습니다.');
+
+            dispatch(resetReportState());
+
+            router.push('/admin/report');
+        }
+    }, [adminDelete.success, router]);
+    
+    // --- adminFetchDetail 오류 ---
+    useEffect(() => {
+        if (adminFetchDetail.error) {
+            message.error(adminFetchDetail.error);
+        }
+    }, [adminFetchDetail.error]);
+
+    
+
+
+
+
+
+
+    // --- 신고 대상 한글 표시 ---
+    const getTargetTypeText = (targetType) => {
+        if (targetType === 'MEETUP') {
+            return '모임';
+        }
+        if (targetType === 'REVIEW') {
+            return '후기';
+        }
+    };
+
+    // --- 신고 사유 한글 표시 ---
+    const getReasonCodeText = (reasonCode)=> {
+        switch (reasonCode) {
+            case 'ABUSE':
+                return '욕설/비방';
+
+            case 'SPAM':
+                return '도배/스팸';
+
+            case 'FAKE_INFO':
+                return '허위 정보';
+
+            case 'AD':
+                return '광고성 게시물';
+
+            case 'NOSHOW':
+                return '노쇼';
+
+            default:
+                return '기타';
+        }
+    };
+
+
+    
+
+
+    //////////////////////////////////////////////////////
+    // 해당 신고 대상 글 보기
+    const handleTargetView = async () => {
+        try {
+            // 모임 신고
+            if (currentReport.targetType === 'MEETUP') {
+                await api.get(`/api/meetups/${currentReport.targetId}`);
+                router.push(`/user/meetup/detail?meetupId=${currentReport.targetId}`);
+                return;
+            }
+
+            // 리뷰 신고
+            if (currentReport.targetType === 'REVIEW') {
+                await api.get(`/api/reviews/${currentReport.targetId}`);
+                router.push(`/user/meetup/review/detailreview?reviewId=${currentReport.targetId}&meetupId=${currentReport.meetupId}`);
+                return;
+            }
+            message.warning('신고 대상 정보를 확인할 수 없습니다.');
+
+        } catch (error) {
+            const status = error.response?.status;
+            if (status === 400 || status === 404) {
+                message.warning('삭제된 게시글입니다.');
+                return;
+            }
+            message.error('게시글을 불러오지 못했습니다.');
+        }
+    };
+
+    // 관리자 신고 AI 판단 보조 요청
+    const handleAiAnalysis = () => {
+        if (!reportId) { return; }
+        dispatch( aiReportAnalysisRequest({reportId}) );
+    };
+
+    // 신고 수정 - 승인 (신뢰도점수/뱃지/처리상태 변경)
+    const handleApproved = () => {
+        if (!processReason.trim()) {
+            message.warning('처리 사유를 입력해주세요.');
+            return;
+        }
+
+        dispatch(
+            updateAdminReportRequest({
+                reportId: Number(reportId),
+                processDto: {
+                    status: 'APPROVED',
+		            processReason: processReason,
+                }
+            })
+        )
+    };
+
+    // 신고 수정 - 반려 (처리상태 변경)
+    const handleRejected = () => {
+        if (!processReason.trim()) {
+            message.warning('처리 사유를 입력해주세요.');
+            return;
+        }
+
+        dispatch(
+            updateAdminReportRequest({
+                reportId: Number(reportId),
+                processDto: {
+                    status: 'REJECTED',
+                    processReason: processReason,
+                }
+            })
+        )
+    };
+    
+    // 신고 삭제 요청
+    const handleDelete = () => {
+        // 삭제 사유 공백 막기
+        if (!processReason.trim()) {
+            message.warning('삭제 사유를 입력해주세요.');
+            return;
+        }
+
+        Modal.confirm({
+            title: '신고 내역을 삭제하시겠습니까?',
+            content: '삭제 후에는 신고 내역을 확인할 수 없습니다.',
+            okText: '삭제',
+            cancelText: '취소',
+
+            okButtonProps: {
+                danger: true
+            },
+            onOk: ()=> {
+                dispatch( deleteAdminReportRequest({
+                    reportId: Number(reportId),
+                    processReason: processReason.trim()
+                }));
+            }
+        });
+    };
+
+    // 접수번호
+    const formatReceiptNumber = (createdAt, reportId) => {
+        if (!createdAt || reportId === undefined || reportId === null) {
+            return "-";
+        }
+
+        const number = String(reportId).padStart(4, "0");
+
+        return `REPORT-${number}`;
+    };
+    
+    // 로딩
+    if (adminFetchDetail.loading || !currentReport) {
+        return (
+            <Spin size="large" />
+        );
+    }
+
+    return (
+        <div className="report-detail-page">
+
+            <div className="admin-report-detail-grid">
+
+                {/* ======================================
+                    A. 관리자 신고 상세보기
+                ====================================== */}
+                <Card className="admin-report-detail-main">
+                    <Title level={2} className="admin-report-detail-title">
+                        관리자 신고 상세보기
                     </Title>
 
-                    <Space
-                        direction="vertical"
-                        size="middle"
-                        style={{ width: '100%' }}
-                    >
-                        <p className="admin-report-ai-description">
-                            신고 내용과 신고 대상 원문,
-                            운영 기준 및 과거 유사 사례를 기반으로 분석합니다.
-                        </p>
-
-                        <span className="admin-report-ai-notice">
-                            ※ AI 결과는 참고용이며 최종 승인 및 반려 결정은
-                            관리자가 수행합니다.
-                        </span>
-
-                        <Button
-                            type="primary"
-                            onClick={handleAiAnalysis}
-                            loading={aiAnalysisLoading}
-                            disabled={!reportId}
-                        >
-                            {aiAnalysisLoading
-                                ? '분석 중... ⏳'
-                                : 'AI 판단 보조 요청'}
-                        </Button>
-
-                        {aiAnalysisError && (
-                            <Alert
-                                type="error"
-                                showIcon
-                                message="AI 분석 실패"
-                                description={aiAnalysisError}
-                            />
-                        )}
-
-                        {currentAiAnalysis && (
-                            <Card
-                                size="small"
-                                title="AI 분석 결과"
-                                className="admin-report-ai-result"
-                            >
-                                <div className="admin-report-ai-result-text">
-                                    {currentAiAnalysis}
-                                </div>
-                            </Card>
-                        )}
-                    </Space>
-                </Card>
-
-
-                {/* C. 처리 사유 + 버튼 */}
-                <Card className="admin-report-process-card">
-                    <Title level={4} className="admin-report-section-title">
-                        신고 처리
-                    </Title>
-
-                    {currentReport.status === 'PENDING' && (
-                        <div className="admin-report-process-reason">
-                            <Title
-                                level={5}
-                                className="admin-report-process-title"
-                            >
-                                처리 사유
-                            </Title>
-
-                            <Input.TextArea
-                                rows={4}
-                                placeholder="승인, 반려 또는 삭제 사유를 입력하세요."
-                                value={processReason}
-                                onChange={(e) => {
-                                    setProcessReason(e.target.value);
-                                }}
-                            />
-                        </div>
-                    )}
-
-                    <div className="admin-report-actions">
-
-                        <div className="admin-report-actions-left">
-                            <Button
-                                onClick={() => router.push('/admin/report')}
-                            >
-                                목록
-                            </Button>
-
-                            <Button onClick={handleTargetView}>
-                                해당 글 보기
-                            </Button>
-                        </div>
-
-                        {currentReport.status === 'PENDING' && (
-                            <div className="admin-report-actions-right">
-                                <Button
-                                    type="primary"
-                                    onClick={handleApproved}
-                                    loading={adminUpdate.loading}
-                                >
-                                    승인
-                                </Button>
-
-                                <Button
-                                    danger
-                                    onClick={handleRejected}
-                                    loading={adminUpdate.loading}
-                                >
-                                    반려
-                                </Button>
-
-                                <Button
-                                    danger
-                                    onClick={handleDelete}
-                                    loading={adminDelete.loading}
-                                >
-                                    삭제
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </Card>
-            </div>
-        </div>
-
-
-        {/* ======================================
-            D. 관리자 처리 이력
-        ====================================== */}
-        <Card className="admin-report-history-card">
-            <Title level={4} className="admin-report-section-title">
-                관리자 처리 이력
-            </Title>
-
-            {auditLogFetch.loading ? (
-                <Spin />
-            ) : auditLogs && auditLogs.length > 0 ? (
-
-                auditLogs.map((log) => (
                     <Descriptions
-                        key={log.auditLogId}
                         bordered
                         column={1}
-                        size="small"
-                        className="admin-report-history-item"
+                        className="report-detail-descriptions"
                     >
-                        <Descriptions.Item label="처리 일시">
-                            {log.processedAt
-                                ? log.processedAt
-                                    .replace('T', ' ')
-                                    .slice(0, 19)
-                                : '-'}
+                        <Descriptions.Item label="신고자">
+                            {currentReport.memberNickname ?? '-'}{' / '}
+                            {currentReport?.trustScore}점{' '}
+                            <ReportStatusCodeTag
+                                statusCode={currentReport.statusCode}
+                            />
                         </Descriptions.Item>
 
-                        <Descriptions.Item label="처리 관리자">
-                            {log.adminNickname || '-'}
+                        <Descriptions.Item label="신고 대상">
+                            {currentReport.targetMemberNickname ?? '-'}{' / '}
+                            {currentReport?.targetTrustScore}점{' '}
+                            <ReportStatusCodeTag
+                                statusCode={currentReport.targetStatusCode}
+                            />
+                        </Descriptions.Item>
+
+                        <Descriptions.Item label="접수 번호">
+                            {formatReceiptNumber(
+                                currentReport.createdAt,
+                                currentReport.reportId
+                            )}
+                        </Descriptions.Item>
+
+                        <Descriptions.Item label="신고 게시글">
+                            {getTargetTypeText(currentReport.targetType)}
+                            {' · '}
+                            {currentReport.targetTitle || '삭제된 게시글'}
+                        </Descriptions.Item>
+
+                        <Descriptions.Item label="신고 사유">
+                            {getReasonCodeText(currentReport.reasonCode)}{' '}
+                            ({currentReport.reasonCode})
+                        </Descriptions.Item>
+
+                        <Descriptions.Item label="상세 내용">
+                            <div className="report-detail-description-text">
+                                {currentReport.reasonDetail
+                                    ? currentReport.reasonDetail
+                                    : '작성된 상세 내용이 없습니다.'}
+                            </div>
                         </Descriptions.Item>
 
                         <Descriptions.Item label="처리 상태">
-                            <Space>
-                                <ReportStatusTag
-                                    status={log.previousStatus}
-                                />
-                                <span>→</span>
-                                <ReportStatusTag
-                                    status={log.changedStatus}
-                                />
-                            </Space>
+                            <ReportStatusTag status={currentReport.status} />
                         </Descriptions.Item>
 
-                        <Descriptions.Item label="관리자 처리 사유">
-                            {log.processReason || '-'}
+                        <Descriptions.Item label="신고일">
+                            {currentReport.createdAt
+                                ?.replace('T', ' ')
+                                .slice(0, 19)}
                         </Descriptions.Item>
 
-                        <Descriptions.Item label="매너 점수 변동">
-                            {log.trustScoreChange != null
-                                ? `${log.trustScoreChange > 0 ? '+' : ''}${log.trustScoreChange}점`
-                                : '-'}
-                        </Descriptions.Item>
+                        {currentReport.userUpdatedAt && (
+                            <Descriptions.Item label="수정일자">
+                                {currentReport.userUpdatedAt
+                                    ?.replace('T', ' ')
+                                    .slice(0, 19)}
+                            </Descriptions.Item>
+                        )}
                     </Descriptions>
-                ))
+                </Card>
 
-            ) : currentReport?.status === 'APPROVED'
-                || currentReport.status === 'REJECTED' ? (
 
-                <div>
-                    처리 이력이 삭제되었습니다. (유효기간 3년 만료)
+                {/* ======================================
+                    오른쪽 B + C
+                ====================================== */}
+                <div className="admin-report-detail-side">
+
+                    {/* B. AI 판단 보조 */}
+                    <Card className="admin-report-ai-card">
+                        <Title level={4} className="admin-report-section-title">
+                            AI 판단 보조
+                        </Title>
+
+                        <Space
+                            direction="vertical"
+                            size="middle"
+                            style={{ width: '100%' }}
+                        >
+                            <p className="admin-report-ai-description">
+                                신고 내용과 신고 대상 원문,
+                                운영 기준 및 과거 유사 사례를 기반으로 분석합니다.
+                            </p>
+
+                            <span className="admin-report-ai-notice">
+                                ※ AI 결과는 참고용이며 최종 승인 및 반려 결정은
+                                관리자가 수행합니다.
+                            </span>
+
+                            <Button
+                                type="primary"
+                                onClick={handleAiAnalysis}
+                                loading={aiAnalysisLoading}
+                                disabled={!reportId}
+                            >
+                                {aiAnalysisLoading
+                                    ? '분석 중... ⏳'
+                                    : 'AI 판단 보조 요청'}
+                            </Button>
+
+                            {aiAnalysisError && (
+                                <Alert
+                                    type="error"
+                                    showIcon
+                                    message="AI 분석 실패"
+                                    description={aiAnalysisError}
+                                />
+                            )}
+
+                            {currentAiAnalysis && (
+                                <Card
+                                    size="small"
+                                    title="AI 분석 결과"
+                                    className="admin-report-ai-result"
+                                >
+                                    <div className="admin-report-ai-result-text">
+                                        {currentAiAnalysis}
+                                    </div>
+                                </Card>
+                            )}
+                        </Space>
+                    </Card>
+
+
+                    {/* C. 처리 사유 + 버튼 */}
+                    <Card className="admin-report-process-card">
+                        <Title level={4} className="admin-report-section-title">
+                            신고 처리
+                        </Title>
+
+                        {currentReport.status === 'PENDING' && (
+                            <div className="admin-report-process-reason">
+                                <Title
+                                    level={5}
+                                    className="admin-report-process-title"
+                                >
+                                    처리 사유
+                                </Title>
+
+                                <Input.TextArea
+                                    rows={4}
+                                    placeholder="승인, 반려 또는 삭제 사유를 입력하세요."
+                                    value={processReason}
+                                    onChange={(e) => {
+                                        setProcessReason(e.target.value);
+                                    }}
+                                />
+                            </div>
+                        )}
+
+                        <div className="admin-report-actions">
+
+                            <div className="admin-report-actions-left">
+                                <Button
+                                    onClick={() => router.push('/admin/report')}
+                                >
+                                    목록
+                                </Button>
+
+                                <Button onClick={handleTargetView}>
+                                    해당 글 보기
+                                </Button>
+                            </div>
+
+                            {currentReport.status === 'PENDING' && (
+                                <div className="admin-report-actions-right">
+                                    <Button
+                                        type="primary"
+                                        onClick={handleApproved}
+                                        loading={adminUpdate.loading}
+                                    >
+                                        승인
+                                    </Button>
+
+                                    <Button
+                                        danger
+                                        onClick={handleRejected}
+                                        loading={adminUpdate.loading}
+                                    >
+                                        반려
+                                    </Button>
+
+                                    <Button
+                                        danger
+                                        onClick={handleDelete}
+                                        loading={adminDelete.loading}
+                                    >
+                                        삭제
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
+                    </Card>
                 </div>
+            </div>
 
-            ) : (
-                <div>
-                    처리 이력이 없습니다.
-                </div>
-            )}
-        </Card>
 
-    </div>
-);
+            {/* ======================================
+                D. 관리자 처리 이력
+            ====================================== */}
+            <Card className="admin-report-history-card">
+                <Title level={4} className="admin-report-section-title">
+                    관리자 처리 이력
+                </Title>
+
+                {auditLogFetch.loading ? (
+                    <Spin />
+                ) : auditLogs && auditLogs.length > 0 ? (
+
+                    auditLogs.map((log) => (
+                        <Descriptions
+                            key={log.auditLogId}
+                            bordered
+                            column={1}
+                            size="small"
+                            className="admin-report-history-item"
+                        >
+                            <Descriptions.Item label="처리 일시">
+                                {log.processedAt
+                                    ? log.processedAt
+                                        .replace('T', ' ')
+                                        .slice(0, 19)
+                                    : '-'}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="처리 관리자">
+                                {log.adminNickname || '-'}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="처리 상태">
+                                <Space>
+                                    <ReportStatusTag
+                                        status={log.previousStatus}
+                                    />
+                                    <span>→</span>
+                                    <ReportStatusTag
+                                        status={log.changedStatus}
+                                    />
+                                </Space>
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="관리자 처리 사유">
+                                {log.processReason || '-'}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="매너 점수 변동">
+                                {log.trustScoreChange != null
+                                    ? `${log.trustScoreChange > 0 ? '+' : ''}${log.trustScoreChange}점`
+                                    : '-'}
+                            </Descriptions.Item>
+                        </Descriptions>
+                    ))
+
+                ) : currentReport?.status === 'APPROVED'
+                    || currentReport.status === 'REJECTED' ? (
+
+                    <div>
+                        처리 이력이 삭제되었습니다. (유효기간 3년 만료)
+                    </div>
+
+                ) : (
+                    <div>
+                        처리 이력이 없습니다.
+                    </div>
+                )}
+            </Card>
+
+        </div>
+    );
+}
+
+export default ReportDetailPage;
