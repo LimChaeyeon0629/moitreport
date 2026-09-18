@@ -1981,7 +1981,6 @@ a {
         "process ai";
 
     gap: 20px;
-    align-items: start;
 }
 
 .admin-report-detail-main {
@@ -2005,6 +2004,7 @@ a {
 .admin-report-ai-card,
 .admin-report-process-card,
 .admin-report-history-card {
+    height: 100%;
     border: 1px solid #eeeeee !important;
     border-radius: 12px !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
@@ -2079,15 +2079,25 @@ a {
 
 
 /* =========================================
-   C. 신고 처리
+   C. 처리 사유
 ========================================= */
 
 .admin-report-process-card .ant-card-body {
-    padding: 22px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .admin-report-process-reason .ant-input {
     border-radius: 8px;
+}
+
+.admin-report-process-reason {
+    flex: 1;
+}
+
+.admin-report-process-reason textarea {
+    min-height: 140px;
 }
 
 .admin-report-actions {
@@ -2098,7 +2108,7 @@ a {
 
     gap: 12px;
 
-    margin-top: 18px;
+    margin-top: auto;
 }
 
 .admin-report-actions-left,
