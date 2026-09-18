@@ -2032,7 +2032,17 @@ a {
     line-height: 1.6;
 }
 
+.admin-report-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
 
+.admin-report-detail-header .admin-report-detail-title {
+    margin-bottom: 0 !important;
+}
 
 
 
