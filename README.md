@@ -1,5 +1,7 @@
 # 🚀 MOIT Report Portfolio
 
+![Uploading image.png…]()
+
 MOIT 팀 프로젝트에서 담당한 **사용자 신고 및 관리자 신고 처리 기능**을 중심으로,
 
 v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개인 포트폴리오 저장소입니다.
