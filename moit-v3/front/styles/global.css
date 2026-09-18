@@ -1971,9 +1971,29 @@ a {
 
 .admin-report-detail-grid {
     display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(360px, 2fr);
+
+    grid-template-columns:
+        minmax(0, 3fr)
+        minmax(380px, 2fr);
+
+    grid-template-areas:
+        "detail ai"
+        "process ai";
+
     gap: 20px;
     align-items: start;
+}
+
+.admin-report-detail-main {
+    grid-area: detail;
+}
+
+.admin-report-ai-card {
+    grid-area: ai;
+}
+
+.admin-report-process-card {
+    grid-area: process;
 }
 
 
@@ -2004,16 +2024,6 @@ a {
     margin-bottom: 20px !important;
 }
 
-
-/* 기존 관리자 상세 label 줄바꿈 방지 */
-.report-detail-page
-.report-detail-descriptions
-.ant-descriptions-item-label {
-    width: 140px;
-    min-width: 140px;
-    white-space: nowrap;
-}
-
 .report-detail-page
 .report-detail-descriptions
 .ant-descriptions-item-content {
@@ -2023,15 +2033,7 @@ a {
 }
 
 
-/* =========================================
-   오른쪽 영역
-========================================= */
 
-.admin-report-detail-side {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
 
 
 /* =========================================
@@ -2082,11 +2084,6 @@ a {
 
 .admin-report-process-card .ant-card-body {
     padding: 22px;
-}
-
-.admin-report-process-title {
-    margin-top: 0 !important;
-    margin-bottom: 10px !important;
 }
 
 .admin-report-process-reason .ant-input {
@@ -2141,8 +2138,11 @@ a {
 
     .admin-report-detail-grid {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "detail"
+            "ai"
+            "process";
     }
-
 }
 
 
