@@ -1,6 +1,6 @@
 # 🚀 MOIT Report Portfolio
 
-![Uploading image.png…]()
+![Uploading KakaoTalk_20260918_141127112.png…]()
 
 MOIT 팀 프로젝트에서 담당한 **사용자 신고 및 관리자 신고 처리 기능**을 중심으로,
 
