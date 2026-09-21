@@ -41,6 +41,9 @@ def analyze_report_statistics(request):
 
         # ★ Pandas가 직접 상태별 신고 건수 분석
         status_counts = df['status'].value_counts()
+        print("🔥 PANDAS 실행됨")
+        print(status_counts)
+
         pending = int(status_counts.get('PENDING', 0))
         approved = int(status_counts.get('APPROVED', 0))
         rejected = int(status_counts.get('REJECTED', 0))
