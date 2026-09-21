@@ -79,3 +79,19 @@ coverage/
 
 uploads/
 moit-v3/back/C:/
+
+# =========================
+# Python / Django
+# =========================
+
+**/__pycache__/
+*.pyc
+*.pyo
+
+**/venv/
+**/.venv/
+**/db.sqlite3
+
+.pytest_cache/
+.coverage
+htmlcov/

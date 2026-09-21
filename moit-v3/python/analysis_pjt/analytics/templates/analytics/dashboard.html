@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>파이썬 데이터 분석 대시보드</title>
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 750px; margin: 50px auto;">
+        <h2>신고 통계 분석 대시보드</h2>
+
+        <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+            <div style="flex: 1; padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4>평균 신고 건수:</h4>
+                <p>{{ stats_summary.avg_total }}</p>
+            </div>
+
+            <div style="flex: 1; padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4>최대 신고 건수:</h4>
+                <p>{{ stats_summary.max_total }}개</p>
+            </div>
+
+            <div style="flex: 1; padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4>누적 신고 건수:</h4>
+                <p>{{ stats_summary.total_sum }}개</p>
+            </div>
+        </div>
+        <canvas id="reportChart"></canvas>
+    </div>
+
+    <!-- 안전한 데이터 전달을 위한 Django json_script 필터 사용 -->
+    <!-- 장고에서 내장필터 json_script : 파이썬의 list로
+        <script id="categories-data"   type="application/json>
+            [카테고리1, 카테고리2]
+        </script>   변환
+    -->
+    {{ chart_data|json_script:"report-chart-data" }}
+
+    <script>
+        const ctx = document.getElementById('analysisChart').getContext('2d');
+        // JSON 파싱을 통해 안전하게 데이터 수신
+        const chartCategories = JSON.parse( document.getElementById('categories-data').textContent );
+        const chartVisitors = JSON.parse( document.getElementById('visitors-data').textContent );
+        const chartSales = JSON.parse( document.getElementById('sales-data').textContent );
+        // Chart.js 인스턴스 생성
+        const analysisChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['처리 대기', '승인', '반려'],        // X축 라벨 ( 카테고리 리스트 )
+                datasets: [
+                    {
+                        label: '신고 건수',
+                        data: pending,     // Y축 ( 처리 대기 ) 1번
+                        data: approved,    // Y축 ( 승인 ) 1번
+                        data: rejected,    // Y축 ( 반려 ) 1번
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '카테고리별 총 매출액 (원)',
+                        data: chartSales,       // Y축 2번 데이터 (매출액)
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }    // Y축 0부터 시작
+                }
+            }
+        });
+    </script>
+</body>
+</html>

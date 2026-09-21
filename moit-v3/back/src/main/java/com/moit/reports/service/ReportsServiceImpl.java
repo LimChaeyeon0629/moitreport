@@ -41,6 +41,11 @@ import com.moit.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -62,6 +67,9 @@ public class ReportsServiceImpl implements ReportsService {
 	private final ReportLockService reportLockService;
 	private final SendEmailService sendEmailService;
 	private final ApplicationEventPublisher eventPublisher;
+	
+	@Value("${django.base-url:http://127.0.0.1:8000}")
+	private String djangoBaseUrl;
 
 	// 사용자 신고 작성
 	@Override
@@ -336,8 +344,44 @@ public class ReportsServiceImpl implements ReportsService {
 		long approved = reportRepository.countByStatusAndDeleteYn(ReportStatus.APPROVED, 'N');
 		long rejected = reportRepository.countByStatusAndDeleteYn(ReportStatus.REJECTED, 'N');
 
-		return Map.of(
-				"total", total,
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+
+			// --------------------------------------------
+			// 1. Spring Boot -> Django 통계 데이터 전달
+			// --------------------------------------------
+			String statisticsUrl = djangoBaseUrl + "/dashboard/api/statistics/";
+
+			Map<String, Object> payload = new HashMap<>();
+
+			payload.put("date", LocalDate.now().toString());
+			payload.put("total", total);
+			payload.put("pending", pending);
+			payload.put("approved", approved);
+			payload.put("rejected", rejected);
+
+			restTemplate.postForEntity(statisticsUrl, payload, Map.class);
+
+			// --------------------------------------------
+			// 2. Django + Pandas 분석 결과 요청
+			// --------------------------------------------
+			String analysisUrl = djangoBaseUrl + "/dashboard/api/report-analysis/";
+
+			Map<?, ?> analysisResult = restTemplate.postForObject(analysisUrl, null, Map.class);
+
+			if (analysisResult != null) {
+				return Map.of("total", ((Number) analysisResult.get("total")).longValue(),
+						"pending", ((Number) analysisResult.get("pending")).longValue(),
+						"approved", ((Number) analysisResult.get("approved")).longValue(),
+						"rejected", ((Number) analysisResult.get("rejected")).longValue());
+			}
+
+		} catch (Exception e) {
+			log.error("[REPORT] Django Pandas 통계 분석 실패", e);
+		}
+
+		// Django 오류 시 기존 Spring 통계 사용
+		return Map.of("total", total,
 				"pending", pending,
 				"approved", approved,
 				"rejected", rejected

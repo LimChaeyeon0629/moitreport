@@ -100,6 +100,7 @@ public class SecurityConfig {
             // API 공개 영역
             // -------------------------------------------------
             .requestMatchers(
+        		"/images/**",
                 "/api/members/signup",
                 "/api/admin/members/signup",
                 "/api/members/login",

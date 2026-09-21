@@ -288,16 +288,6 @@ function ReportDetailPage() {
                         관리자 신고 상세보기
                     </Title>
 
-                    <Space>
-                        <Button onClick={() => router.push('/admin/report')}>
-                            목록
-                        </Button>
-
-                        <Button onClick={handleTargetView}>
-                            해당 글 보기
-                        </Button>
-                    </Space>
-
                     <Descriptions
                         bordered
                         column={1}
@@ -363,6 +353,16 @@ function ReportDetailPage() {
                             </Descriptions.Item>
                         )}
                     </Descriptions>
+
+                    <Space>
+                        <Button onClick={() => router.push('/admin/report')}>
+                            목록
+                        </Button>
+                        
+                        <Button onClick={handleTargetView}>
+                            해당 글 보기
+                        </Button>
+                    </Space>
                 </Card>
 
 
