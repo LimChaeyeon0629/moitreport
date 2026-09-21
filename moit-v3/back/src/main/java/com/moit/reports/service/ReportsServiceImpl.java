@@ -46,6 +46,14 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -354,7 +362,19 @@ public class ReportsServiceImpl implements ReportsService {
 
 			String analysisUrl = djangoBaseUrl + "/dashboard/api/report-analysis/";
 
-			Map<?, ?> analysisResult = restTemplate.postForObject(analysisUrl, payload, Map.class);
+			ObjectMapper objectMapper = new ObjectMapper();
+			byte[] jsonBody = objectMapper.writeValueAsBytes(payload);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setContentLength(jsonBody.length);
+
+			HttpEntity<byte[]> requestEntity = new HttpEntity<>(jsonBody, headers);
+
+			ResponseEntity<Map> response = restTemplate.exchange(analysisUrl, HttpMethod.POST, requestEntity,
+					Map.class);
+
+			Map<?, ?> analysisResult = response.getBody();
 
 			if (analysisResult != null) {
 				return Map.of("total", ((Number) analysisResult.get("total")).longValue(),
