@@ -16,127 +16,51 @@ from .models import ReportStatistic
 def analyze_report_statistics(request):
 
     if request.method != 'POST':
-        return JsonResponse({
-            'status': 'fail',
-            'message': 'POST 요청만 지원합니다.'
-        }, status=405)
-
-    try:
-        # DB 데이터 가져오기
-        qs = ReportStatistic.objects.all().values(
-            'date',
-            'total',
-            'pending',
-            'approved',
-            'rejected'
+        return JsonResponse(
+            {
+                'status': 'fail',
+                'message': 'POST 요청만 지원합니다.'
+            },
+            status=405
         )
 
-        if qs.exists():
+    try:
+        data = json.loads(request.body)
+        reports = data.get('reports', [])
 
-            # DB QuerySet → Pandas DataFrame
-            df = pd.DataFrame(list(qs))
+        # Spring에서 받은 신고 원본 상태값을 DataFrame으로 변환
+        df = pd.DataFrame(reports)
 
-            # ----------------------------------------------------
-            # 📊 Pandas 데이터 분석 수행
-            # ----------------------------------------------------
+        if df.empty:
+            return JsonResponse({
+                'total': 0,
+                'pending': 0,
+                'approved': 0,
+                'rejected': 0
+            })
 
-            # 날짜순 정렬
-            df = df.sort_values('date')
+        # ★ Pandas가 직접 상태별 신고 건수 분석
+        status_counts = df['status'].value_counts()
+        pending = int(status_counts.get('PENDING', 0))
+        approved = int(status_counts.get('APPROVED', 0))
+        rejected = int(status_counts.get('REJECTED', 0))
+        total = int(len(df))
 
-            # 가장 최근 신고 통계
-            latest = df.iloc[-1]
-
-            total = int(latest['total'])
-            pending = int(latest['pending'])
-            approved = int(latest['approved'])
-            rejected = int(latest['rejected'])
-
-            # 평균 신고 건수
-            avg_total = round(
-                df['total'].mean(),
-                1
-            )
-
-            # 최대 신고 건수
-            max_total = int(
-                df['total'].max()
-            )
-
-            # 최소 신고 건수
-            min_total = int(
-                df['total'].min()
-            )
-
-            # 누적 통계 데이터 합계
-            total_sum = int(
-                df['total'].sum()
-            )
-
-            # 처리 완료 건수
-            processed = approved + rejected
-
-            # 승인율
-            if processed > 0:
-                approval_rate = round(
-                    approved / processed * 100,
-                    1
-                )
-            else:
-                approval_rate = 0
-
-            # 날짜별 추이
-            trend_dates = (
-                df['date']
-                .astype(str)
-                .tolist()
-            )
-
-            trend_totals = (
-                df['total']
-                .tolist()
-            )
-
-        else:
-            total = 0
-            pending = 0
-            approved = 0
-            rejected = 0
-
-            avg_total = 0
-            max_total = 0
-            min_total = 0
-            total_sum = 0
-
-            approval_rate = 0
-
-            trend_dates = []
-            trend_totals = []
-
-        # ----------------------------------------------------
-        # 🎯 Spring Boot로 분석 결과 반환
-        # ----------------------------------------------------
         return JsonResponse({
             'total': total,
             'pending': pending,
             'approved': approved,
-            'rejected': rejected,
-
-            'avgTotal': avg_total,
-            'maxTotal': max_total,
-            'minTotal': min_total,
-            'totalSum': total_sum,
-
-            'approvalRate': approval_rate,
-
-            'trendDates': trend_dates,
-            'trendTotals': trend_totals
+            'rejected': rejected
         })
 
     except Exception as e:
-        return JsonResponse({
-            'status': 'error',
-            'message': str(e)
-        }, status=400)
+        return JsonResponse(
+            {
+                'status': 'error',
+                'message': str(e)
+            },
+            status=400
+        )
 
 
 # ============================================================

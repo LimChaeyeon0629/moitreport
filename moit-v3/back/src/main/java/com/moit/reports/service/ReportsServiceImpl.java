@@ -339,35 +339,22 @@ public class ReportsServiceImpl implements ReportsService {
 	@Override
 	public Map<String, Long> getAdminReportStats() {
 
-		long total = reportRepository.countByDeleteYn('N');
-		long pending = reportRepository.countByStatusAndDeleteYn(ReportStatus.PENDING, 'N');
-		long approved = reportRepository.countByStatusAndDeleteYn(ReportStatus.APPROVED, 'N');
-		long rejected = reportRepository.countByStatusAndDeleteYn(ReportStatus.REJECTED, 'N');
-
 		try {
-			RestTemplate restTemplate = new RestTemplate();
+			// 삭제되지 않은 신고 원본 조회
+			List<Report> reports = reportRepository.findByDeleteYn('N');
 
-			// --------------------------------------------
-			// 1. Spring Boot -> Django 통계 데이터 전달
-			// --------------------------------------------
-			String statisticsUrl = djangoBaseUrl + "/dashboard/api/statistics/";
+			// Django에 상태값만 전달
+			List<Map<String, String>> reportData = reports.stream()
+					.map(report -> Map.of("status", report.getStatus().name())).toList();
 
 			Map<String, Object> payload = new HashMap<>();
+			payload.put("reports", reportData);
 
-			payload.put("date", LocalDate.now().toString());
-			payload.put("total", total);
-			payload.put("pending", pending);
-			payload.put("approved", approved);
-			payload.put("rejected", rejected);
+			RestTemplate restTemplate = new RestTemplate();
 
-			restTemplate.postForEntity(statisticsUrl, payload, Map.class);
-
-			// --------------------------------------------
-			// 2. Django + Pandas 분석 결과 요청
-			// --------------------------------------------
 			String analysisUrl = djangoBaseUrl + "/dashboard/api/report-analysis/";
 
-			Map<?, ?> analysisResult = restTemplate.postForObject(analysisUrl, null, Map.class);
+			Map<?, ?> analysisResult = restTemplate.postForObject(analysisUrl, payload, Map.class);
 
 			if (analysisResult != null) {
 				return Map.of("total", ((Number) analysisResult.get("total")).longValue(),
@@ -377,15 +364,19 @@ public class ReportsServiceImpl implements ReportsService {
 			}
 
 		} catch (Exception e) {
-			log.error("[REPORT] Django Pandas 통계 분석 실패", e);
+			log.error("[REPORT] Django Pandas 신고 통계 분석 실패", e);
 		}
 
-		// Django 오류 시 기존 Spring 통계 사용
-		return Map.of("total", total,
-				"pending", pending,
-				"approved", approved,
-				"rejected", rejected
-		);
+		// Django 장애 시 기존 DB 통계 fallback
+		long total = reportRepository.countByDeleteYn('N');
+
+		long pending = reportRepository.countByStatusAndDeleteYn(ReportStatus.PENDING, 'N');
+
+		long approved = reportRepository.countByStatusAndDeleteYn(ReportStatus.APPROVED, 'N');
+
+		long rejected = reportRepository.countByStatusAndDeleteYn(ReportStatus.REJECTED, 'N');
+
+		return Map.of("total", total, "pending", pending, "approved", approved, "rejected", rejected);
 	}
 
 	/////////////////////////////////////////////////////////////////////
