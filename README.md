@@ -14,6 +14,12 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 | **v2** | Spring Boot, Thymeleaf, MyBatis, Oracle, OpenAI API | 중복 신고 방지, 본인 신고 방지, OpenAI API 신고 사유 생성, 이메일 발송 |
 | **v3** | Spring Boot, React, Next.js, JWT, Redis, JPA, MyBatis, Oracle | Redis Lock, 신뢰도 연계, Audit Log, 비동기 이메일, RAG 기반 관리자 판단 보조 |
 
+## 🎥 신고 기능 시연 영상
+
+🔗 [MOIT v1 REPORT] https://www.youtube.com/watch?v=QX637JXQ8XY
+🔗 [MOIT v2 REPORT] https://www.youtube.com/watch?v=QX637JXQ8XY
+🔗 [MOIT v3 REPORT] https://www.youtube.com/watch?v=QX637JXQ8XY
+
 ## 🧪 신고 기능 테스트 가이드
 
 - **Service URL**: https://moitreport.duckdns.org/
