@@ -241,7 +241,7 @@ Lock 획득 후 DB에서 신고 상태가 `PENDING`인지 다시 확인하여 �
 
 ### 신고 기능
 
-🔗 https://www.youtube.com/watch?v=HBbAt6RWaLs
+🔗 https://www.youtube.com/watch?v=QX637JXQ8XY
 
 ---
 
