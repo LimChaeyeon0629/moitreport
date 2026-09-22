@@ -17,6 +17,7 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 ## 🎥 신고 기능 시연 영상
 
 🔗 [MOIT v1 REPORT] https://www.youtube.com/watch?v=QSb3lZ5VrFA
+https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v1
 
 🔗 [MOIT v2 REPORT] https://www.youtube.com/watch?v=BbsZr3dRHZ0
 
