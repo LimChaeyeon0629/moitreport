@@ -4,7 +4,7 @@
 
 MOIT 팀 프로젝트에서 담당한 **사용자 신고 및 관리자 신고 처리 기능**을 중심으로,
 
-v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개인 포트폴리오 저장소입니다.
+v1 → v2 → v3 → v4 까지 기능을 확장하고 실제 AWS 환경에 배포한 개인 포트폴리오 저장소입니다.
 
 ## 📈 Report Feature Evolution
 
@@ -13,6 +13,7 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 | **v1** | Spring Framework, JSP, MyBatis, MySQL | 사용자 신고 CRUD, 관리자 신고 목록/상세/처리 |
 | **v2** | Spring Boot, Thymeleaf, MyBatis, Oracle, OpenAI API | 중복 신고 방지, 본인 신고 방지, OpenAI API 신고 사유 생성, 이메일 발송 |
 | **v3** | Spring Boot, React, Next.js, JWT, Redis, JPA, MyBatis, Oracle | Redis Lock, 신뢰도 연계, Audit Log, 비동기 이메일, RAG 기반 관리자 판단 보조 |
+| **v4** | 
 
 ## 🎥 신고 기능 시연 영상
 
@@ -20,19 +21,22 @@ v1 → v2 → v3까지 기능을 확장하고 실제 AWS 환경에 배포한 개
 
 🎥 [MOIT v2 REPORT] https://www.youtube.com/watch?v=BbsZr3dRHZ0
 
-🎥 [MOIT v3 REPORT] https://www.youtube.com/watch?v=QX637JXQ8XY
+🎥 [MOIT v3 REPORT + MOIT v4 REPORT] https://www.youtube.com/watch?v=QX637JXQ8XY
 
 🔗 [MOIT v1 GIT] https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v1
 
 🔗 [MOIT v2 GIT] https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v2
 
-🔗 [MOIT v3 GIT] https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v3
+🔗 [MOIT v3 GIT + MOIT v4 GIT] https://github.com/LimChaeyeon0629/moitreport/tree/main/moit-v3
 
 📄 [MOIT v1 결과보고서 PPT.pdf](https://github.com/user-attachments/files/32323162/MOIT.1.pdf)
 
 📄 [MOIT v2 결과보고서 PPT.pdf](https://github.com/user-attachments/files/32322878/MOIT.2.pdf)
 
 📄 [MOIT v3 결과보고서 PPT.pdf](https://github.com/user-attachments/files/32321830/MOIT.3.pdf)
+
+📄 [MOIT v4 결과보고서 PPT.pdf](https://github.com/user-attachments/files/32727123/MOIT.4.pdf)
+
 
 
 ## 🧪 신고 기능 테스트 가이드
