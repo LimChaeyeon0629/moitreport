@@ -13,7 +13,7 @@ v1 → v2 → v3 → v4 까지 기능을 확장하고 실제 AWS 환경에 배�
 | **v1** | Spring Framework, JSP, MyBatis, MySQL | 사용자 신고 CRUD, 관리자 신고 목록/상세/처리 |
 | **v2** | Spring Boot, Thymeleaf, MyBatis, Oracle, OpenAI API | 중복 신고 방지, 본인 신고 방지, OpenAI API 신고 사유 생성, 이메일 발송 |
 | **v3** | Spring Boot, React, Next.js, JWT, Redis, JPA, MyBatis, Oracle | Redis Lock, 신뢰도 연계, Audit Log, 비동기 이메일, RAG 기반 관리자 판단 보조 |
-| **v4** | Spring Boot, Next.js, Flutter, Django, Python, Oracle | 신고 UI/UX 개선, Django 기반 신고 데이터 통계·시각화 연계 |
+| **v4** | Spring Boot, Next.js, Flutter, Django, Python, Oracle | 신고 UI/UX 개선, Django 기반 신고 데이터 통계 |
 
 ## 🎥 신고 기능 시연 영상
 
