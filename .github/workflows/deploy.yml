@@ -41,7 +41,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./moit-v3/front
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Frontend Build
         working-directory: ./moit-v3/front
