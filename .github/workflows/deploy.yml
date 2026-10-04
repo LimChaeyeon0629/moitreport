@@ -1,0 +1,76 @@
+name: MOIT CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backend-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Grant execute permission
+        working-directory: ./moit-v3/back
+        run: chmod +x gradlew
+
+      - name: Backend Build
+        working-directory: ./moit-v3/back
+        run: ./gradlew clean bootJar -x test --no-daemon
+
+  frontend-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./moit-v3/front
+        run: npm ci
+
+      - name: Frontend Build
+        working-directory: ./moit-v3/front
+        run: npm run build
+
+  deploy:
+    needs:
+      - backend-build
+      - frontend-build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd /home/ubuntu/moit
+            git pull origin main
+
+            cd /home/ubuntu/moit/moit-v3/back
+            chmod +x gradlew
+            ./gradlew clean bootJar -x test --no-daemon
+            pm2 restart moit-backend --update-env
+
+            cd /home/ubuntu/moit/moit-v3/front
+            npm run build
+            pm2 restart moit-frontend --update-env
